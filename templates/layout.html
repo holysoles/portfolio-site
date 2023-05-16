@@ -1,0 +1,46 @@
+<!doctype html>
+<div class="header">
+    <div>
+        <span>
+            <a href="/">
+                <span id="wsite-title">Patrick Evans</span>
+            </a>
+        </span>
+    </div>
+    <div>
+        <ul>
+            <li style="position: relative;">
+                <a href="{{ url_for('home') }}" style="position: relative;">
+                Projects
+                </a>
+            </li>
+            <li style="position: relative;">
+                <a href="https://github.com/holysoles?tab=repositories" style="position: relative;">
+                    Github
+                </a>
+                
+            </li>
+            <li style="position: relative;">
+                <a href="http://www.linkedin.com/in/patrickvevans" style="position: relative;">
+                    LinkedIn
+                </a>
+                
+            </li>
+            <li style="position: relative;">
+                <a href="https://du-pl.com" style="position: relative;">
+                    DU-PL App
+                </a>
+                
+            </li>
+            <li style="position: relative;">
+                <a href="{{ url_for('contact') }}" style="position: relative;">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>

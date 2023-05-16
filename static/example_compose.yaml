@@ -1,0 +1,57 @@
+
+version: '3.8'
+services:
+  pihole:
+    image: pihole/pihole:latest
+    deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        delay: 30s
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.pihole==true]
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        delay: 30s
+        window: 120s
+    ports:
+      - target: 53
+        published: 53
+        protocol: tcp
+        mode: host
+      - target: 53
+        published: 53
+        protocol: udp
+        mode: host
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+    environment:
+      DHCP_ACTIVE: 'false'
+      DNSMASQ_LISTENING: 'all'
+      DNS_BOGUS_PRIV: 'true'
+      DNS_FQDN_REQUIRED: 'true'
+
+      PIHOLE_DNS_: '192.168.1.5;192.168.1.6;fe80::b1f2:c67d:5464:e10f;fe80::f576:da56:d322:4dc'
+      REV_SERVER: 'true'
+      REV_SERVER_CIDR: '192.168.0.0/16'
+      REV_SERVER_TARGET: '192.168.1.5'
+      REV_SERVER_DOMAIN: 'domain.lan'
+      TZ: 'America/Chicago'
+      WEBTHEME: 'default-dark'
+    volumes:
+      - pihole.etc:/etc/pihole/
+      - pihole.dnsmasqd:/etc/dnsmasq.d/
+    networks:
+      - host
+
+networks:
+  host:
+    external: true
+
+volumes:
+    pihole.etc:
+    pihole.dnsmasqd:
