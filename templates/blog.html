@@ -23,10 +23,11 @@
                             {{ paragraph['text'] }}
                         </p>
                     {% endif %}
-                    </div>
-                    <div>
+                    {% if paragraph['code'] %}
+                        <pre><code>{{ paragraph['code'] }}</code></pre>
+                    {% endif %}
                     {% if paragraph['image'] %}
-                        <img src="{{ url_for('static', filename=paragraph['image']) }}"" />
+                        <img src="{{ url_for('static', filename=paragraph['image']) }}" />
                     {% endif %}
                     </div>
                 {% endfor %}

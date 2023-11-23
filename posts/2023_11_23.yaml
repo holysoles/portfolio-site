@@ -1,7 +1,7 @@
 title: "Highly Available DNS for Home Network"
 date: "11/23/2023"
 body:
-  - title:
+  - section_title:
     text: "A recent project I worked on was improving the fault tolerance of my home network, specifically DNS. Previously, I was running a single instance of 
     Pi-hole, which filters out unwanted DNS queries, and forwarded the rest to my upstream Windows Domain Controllers with integrated DNS. From there, queries go 
     out to a public resolver. This approach had a few drawbacks. Two issue stemmed from that the Pi-hole instance was running bare-metal on a Raspberry Pi, which 
@@ -12,7 +12,7 @@ body:
      to a single IP address (192.168.1.2), provided via DHCP, which is a load balanced IP address on my ADC (now NetScaler again) VPX appliance, pointed at two 
      Pi-hole instances."
     image: "DNS_diagram.png"
-  - title: "NetScaler Configuration"
+  - section_title: "NetScaler Configuration"
     text: "Getting a NetScaler instance up and running is actually pretty easy, since as of v12.1, Citrix offers a Freemium licensing option, which is bandwidth 
     restricted to 20 Mbps and doesn't provide access to certain features like GSLB or Citrix Gateway, but neither limitation is an issue for this use case. 
     Configuring a simple load balancer for servers on a NetScaler isn't particularly difficult and many general guides exist. At a high level, you need to:"
@@ -24,7 +24,7 @@ body:
   resolves to one of the IP addresses of my domain controllers. Multiple IP addresses can be added to the list to be considered a valid response. Don't forget 
   to save your changes since they won't persist through reboot otherwise!"
     image: "netscaler_healthcheck.png"
-  - title: "Pi-hole Container Setup"
+  - section_title: "Pi-hole Container Setup"
     text: "The upstream Pi-hole instances are configured with Docker Compose, deployed as containers on a Docker Swarm cluster, and managed via Portainer.
       I opted for Docker Swarm over a more complex tool like Kubernetes given the relatively low complexity of this project's requirements. 
       I may follow up with migrating these containers to being managed with Kubernetes in the future. Creating a Docker Swarm and joining nodes to it is fairly 
@@ -39,17 +39,19 @@ body:
   - text: "Most of the Pi-hole settings are configurable via the Compose file. However not all of them are, particularly custom defined Allow/Blocklists entries, 
       Client Group Management, and others. For these settings, I recommend exporting/importing via the Teleporter backup feature under the settings page. 
       These will be stored in the \"pihole.etc\" volume."
-  #TODO load in example_compose.yaml
-  - title: "Takeaways"
+  - section_title: Example Compose File
+    code: "pihole_compose.yaml"
+  - section_title: "Takeaways"
     text: "Advantages:"
   - text: "- A single IP to point to for DNS queries reduces network complexity"
   - text: "- When defining two DNS servers for clients, clients only fail over to the secondary one if the first is unavailable. This allows DNS queries to be 
       consistently balanced between both Pi-Hole nodes and reduce system load."
   - text: "- The custom DNS monitor ensures my upstream Windows servers are answering domain queries with healthy responses."
   - text: "- Pi-hole containers defined via YAML increases flexibility to deploy additional nodes if needed."
-  - text: ""
-  - text: "The primary disadvantage of this setup is a single point of failure remains, with the NetScaler node being the listening IP for DNS queries. I found 
+  - text: "Disadvantages:"
+  - text: "- The primary disadvantage of this setup is a single point of failure remains, with the NetScaler node being the listening IP for DNS queries. I found 
       this risk to be tolerable though since I dont use my NetScaler VPX for other purposes, and its significantly more stable by comparison to the DNS servers 
       themselves."
+  - text: ""
   - text: "In the future, I'd like to further investigate maintaining between synchronicity between the Pi-Hole docker nodes. I plan to do this with either the 
       handy gravity-sync tool by vmstan, and/or by using shared storage for the volumes being used by the docker nodes."
