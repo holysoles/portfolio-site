@@ -1,0 +1,20 @@
+title: "Configuring a Hub-Spoke VPN with WireGuard"
+date: "5/13/2022"
+body:
+  - text: "When I recently moved, I unfortunately found that my ISP used double-NAT for their customers. This meant for services I run on my home network that don't support IPv6, such as Plex, or my file share, I was unable to access them externally. To address this, I identified that a hub-spoke VPN configuration would allow me to access my home network when on the go. I choose WireGuard as the VPN protocol for a multitude of reasons: it is highly efficient compared to older protocols like OpenVPN or IPSec, is natively included in the Linux Kernel starting with version 5.6, and is configurable via a typical network interface."
+  - text: "By utilizing a server that is publicly accessible​, you can route bi-directional traffic from a client not on-prem, into your home network:"
+    image: 'hub-spoke-setup-diagram.png'
+  - text: DNS for clients is routed back to my home DNS server (Pi-hole), with my internal domain configured as the search domain. This allows me to perform DNS lookups for clients on my home network, as well as my pi-hole for ad blocking on the go"
+  - section_title: "Setup"
+    text: "Installation/setup of WireGuard is fairly easy, and there are plenty of guides available for details. Besides configuring the WireGuard interfaces with the configuration specific to this setup (see below), the only other specific setup was to configure the security group in the AWS web console to allow inbound traffic to the port noted in the server's WireGuard config."
+  - text: "Navigate to your EC2 Management Console and select your server instance."
+  - text: "Click the security group that is attached to the instance, found under the \"Security\" tab."
+  - text: "Under \"Inbound Rules\", click \"Edit inbound rules\"."
+  - text: "Add a rule with the following:"
+  - text: "Type: \"Custom UDP\""
+  - text: "Port range: enter the port you have in your server's WireGuard config"
+  - text: "Source: Anywhere-IPv4"
+  - section_title: "Takeaways"
+  - text: Configuring this did not come without challenges. Most notably, was the undertaking of re-IPing my home network. This was not strictly necessary, but it helps avoid IP conflicts between the network that I'm connected to on the go, and my home network. This configuration also selectively route only my private network ranges through the VPN to increase efficiency. This way if I want to stream a TV show, acccess, I'm not losing efficiency.
+  - text: When I first implemented this setup, I was using a Raspberry Pi as the gateway into my home network. However, I soon realized this task was best suited for my Router. I have a Ubiquiti router that runs their EdgeOS, which doesn't have native WireGuard support. I was able to find this fantastic WireGuard package that allows for implementing WireGuard on vyatta, which EdgeOS is built on top of. Since vyatta is a fork of Debian linux, getting this configured was fairly straightforward. Their Github wiki covers these steps in details.
+  - text: I route a 10.10.0.0/16 network through the VPN. Initially this was just a single /24 subnet, but I've found having each client correspond to a single network interface on the AWS server will allow for special configuration, such as mDNS reflection, without causing a reflection loop. This is next on my list to get implemented, since it allows access to even more services on my home network. 

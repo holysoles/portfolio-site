@@ -1,4 +1,5 @@
 <!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 <div class="header">
     <div class="titlebar">
         <span>
@@ -26,4 +27,3 @@
     {% block content %}
     {% endblock %}
 </div>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
