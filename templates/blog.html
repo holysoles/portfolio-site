@@ -5,30 +5,32 @@
     {% for post in post_array %}
         <tr>
             <td>
-            {% if post['title'] %}
-                <h2>
-                    {{ post['title'] }} - {{ post['date'] }}
-                </h2>
-            {% endif %}
-            {% for paragraph in post['body'] %}
-                <div>
-                {% if paragraph['section_title'] %}
-                    <h3>
-                        {{ paragraph['section_title'] }}
-                    </h3>
+                <article>
+                {% if post['title'] %}
+                    <h2>
+                        {{ post['title'] }} - {{ post['date'] }}
+                    </h2>
                 {% endif %}
-                {% if paragraph['text'] %}
-                    <span>
-                        {{ paragraph['text'] }}
-                    </span>
-                {% endif %}
-                </div>
-                <div>
-                {% if paragraph['image'] %}
-                    <img src="{{ url_for('static', filename=paragraph['image']) }}"" />
-                {% endif %}
-                </div>
-            {% endfor %}
+                {% for paragraph in post['body'] %}
+                    <div>
+                    {% if paragraph['section_title'] %}
+                        <h3>
+                            {{ paragraph['section_title'] }}
+                        </h3>
+                    {% endif %}
+                    {% if paragraph['text'] %}
+                        <p>
+                            {{ paragraph['text'] }}
+                        </p>
+                    {% endif %}
+                    </div>
+                    <div>
+                    {% if paragraph['image'] %}
+                        <img src="{{ url_for('static', filename=paragraph['image']) }}"" />
+                    {% endif %}
+                    </div>
+                {% endfor %}
+                </article>
             </td>
         </tr>
     {% endfor %}

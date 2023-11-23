@@ -1,46 +1,29 @@
 <!doctype html>
 <div class="header">
-    <div>
+    <div class="titlebar">
         <span>
             <a href="/">
                 <span id="wsite-title">Patrick Evans</span>
             </a>
         </span>
     </div>
-    <div>
-        <ul>
-            <li style="position: relative;">
-                <a href="{{ url_for('home') }}" style="position: relative;">
-                Projects
-                </a>
-            </li>
-            <li style="position: relative;">
-                <a href="https://github.com/holysoles?tab=repositories" style="position: relative;">
-                    Github
-                </a>
-                
-            </li>
-            <li style="position: relative;">
-                <a href="http://www.linkedin.com/in/patrickvevans" style="position: relative;">
-                    LinkedIn
-                </a>
-                
-            </li>
-            <li style="position: relative;">
-                <a href="https://du-pl.com" style="position: relative;">
-                    DU-PL App
-                </a>
-                
-            </li>
-            <li style="position: relative;">
-                <a href="{{ url_for('contact') }}" style="position: relative;">
-                    Contact
-                </a>
-            </li>
+    <nav class="navbar">
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="{{ url_for('home') }}">Projects</a></li>
+            <li><a href="https://github.com/holysoles?tab=repositories" target="_blank">Github</a></li>
+            <li><a href="http://www.linkedin.com/in/patrickvevans" target="_blank">LinkedIn</a></li>
+            <li><a href="https://www.du-pl.com/" target="_blank">DU-PL App</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
-    </div>
+    </nav>  
 </div>
 <div class="content">
     {% block content %}
     {% endblock %}
 </div>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
