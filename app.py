@@ -2,8 +2,14 @@ from flask import Flask, render_template
 import yaml
 from os import listdir
 from os.path import isfile, join
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+
+# Proxy setup
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 @app.route("/")
 def home():
