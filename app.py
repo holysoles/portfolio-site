@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 import yaml
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, splitext
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
@@ -15,9 +15,10 @@ app.wsgi_app = ProxyFix(
 def home():
     yaml_path = './posts/'
     code_snippet_path = './code_snippets/'
-    yaml_files = [join(yaml_path, file) for file in listdir(yaml_path) if isfile(join(yaml_path, file))]
-    post_array = []
+    dir_files = [join(yaml_path, file) for file in listdir(yaml_path) if isfile(join(yaml_path, file))]
+    yaml_files = [file for file in dir_files if splitext(file)[1] == '.yaml']
     yaml_files.sort(reverse=True)
+    post_array = []
     for yaml_file in yaml_files:
         with open(yaml_file, 'r') as file:
             post_data = yaml.safe_load(file)

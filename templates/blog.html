@@ -40,7 +40,7 @@
                         </div>
                     {% endif %}
                     {% if paragraph['image'] %}
-                        <img src="{{ url_for('static', filename=paragraph['image']) }}" />
+                        <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
                     {% endif %}
                     </div>
                 {% endfor %}
