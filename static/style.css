@@ -1,163 +1,212 @@
 /* Reset some default styles for better consistency across browsers */
 body, h1, h2, h3, p, ul, ol, li {
-    margin: 0;
-    padding: 0;
-  }
+  margin: 0;
+  padding: 0;
+}
 
-  /* General formatting */
+/* General formatting */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+header h1 {
+  font-size: 2em;
+}
+
+main {
+  margin-top: 20px;
+}
+
+article {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+  color: #333;
+}
+
+article p {
+  color: #555;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
   body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #f5f5f5;
-    color: #333;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-  }
-  
-  header h1 {
-    font-size: 2em;
-  }
-  
-  main {
-    margin-top: 20px;
-  }
-  
-  article {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  article h2 {
-    color: #333;
-  }
-  
-  article p {
-    color: #555;
-  }
-  
-  footer {
-    margin-top: 20px;
-    padding: 10px 0;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-  }
-  
-  /* Responsive design for smaller screens */
-  @media screen and (max-width: 600px) {
-    body {
-      font-size: 16px;
-    }
-  
-    header h1 {
-      font-size: 1.5em;
-    }
-  
-    nav a {
-      font-size: 0.9em;
-    }
-  
-    article {
-      padding: 15px;
-    }
-  }
-  
-  /* Header title style */
-  .titlebar {
-    text-align: center;
-  }
-  #wsite-title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 24px;
-    color: #333; /* Adjust the color to your liking */
-    letter-spacing: 1px;
-    text-decoration: none;
-  }
-  #wsite-title:hover {
-    text-decoration: underline; /* Optional: Underline on hover */
+    font-size: 16px;
   }
 
-  @media screen and (max-width: 768px) {
-    #wsite-title {
-      font-size: 20px; /* Adjust font size for smaller screens */
-    }
+  header h1 {
+    font-size: 1.5em;
   }
-  
-  /* Navigation styles */
-  .navbar {
-    background-color: #333;
-    padding: 10px;
-    text-align: center;
+
+  nav a {
+    font-size: 0.9em;
   }
-  
+
+  article {
+    padding: 15px;
+  }
+}
+
+/* Header title style */
+.titlebar {
+  text-align: center;
+}
+#wsite-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  color: #333; /* Adjust the color to your liking */
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+#wsite-title:hover {
+  text-decoration: underline; /* Optional: Underline on hover */
+}
+
+@media screen and (max-width: 768px) {
+  #wsite-title {
+    font-size: 20px; /* Adjust font size for smaller screens */
+  }
+}
+
+/* Navigation styles */
+.navbar {
+  background-color: #333;
+  padding: 10px;
+  text-align: center;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  display: block;
+  height: 3px;
+  width: 25px;
+  background-color: #fff;
+  margin: 5px auto;
+}
+
+.nav-list {
+  list-style-type: none;
+}
+
+.nav-list li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-list a:hover {
+  color: #007bff;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
   .menu-toggle {
-    display: none;
-    cursor: pointer;
-  }
-  
-  .bar {
     display: block;
-    height: 3px;
-    width: 25px;
-    background-color: #fff;
-    margin: 5px auto;
   }
-  
+
   .nav-list {
-    list-style-type: none;
+    display: none;
+    text-align: left;
+    padding: 10px;
+    background-color: #333;
   }
-  
+
   .nav-list li {
-    display: inline-block;
-    margin-right: 15px;
+    display: block;
+    margin: 10px 0;
   }
-  
+
   .nav-list a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
+    display: block;
   }
-  
-  .nav-list a:hover {
-    color: #007bff;
+
+  .navbar.active .nav-list {
+    display: block;
   }
-  
-  /* Responsive design for smaller screens */
-  @media screen and (max-width: 768px) {
-    .menu-toggle {
-      display: block;
-    }
-  
-    .nav-list {
-      display: none;
-      text-align: left;
-      padding: 10px;
-      background-color: #333;
-    }
-  
-    .nav-list li {
-      display: block;
-      margin: 10px 0;
-    }
-  
-    .nav-list a {
-      display: block;
-    }
-  
-    .navbar.active .nav-list {
-      display: block;
-    }
-  }
+}
+
+ /* Style for the code block container */
+.code-container {
+  display: flex;
+  align-items: baseline; /* Align items along the baseline */
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow-x: auto; /* Enable horizontal scrolling for long lines of code */
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+/* Style for the code text */
+code {
+  font-family: 'Courier New', monospace;
+  color: #333;
+  flex-grow: 1; /* Allow code block to grow and take remaining space */
+}
+
+.code-text {
+  margin: 0px;
+}
+
+/* Style for line numbers */
+.line-numbers {
+  display: flex;
+  flex-direction: column; /* Display line numbers vertically */
+  margin-right: 10px;
+  color: #999;
+}
+
+/* Optional: Add a background to the line numbers */
+.line-numbers-background {
+  background-color: #e0e0e0;
+  padding: 0 10px;
+  border-radius: 5px 0 0 5px;
+}
+
+/* Optional: Highlight the current line */
+.line-highlight:hover{
+  background-color: #ffe8b0;
+  display: block;
+  margin-right: -10px;
+  margin-left: -10px;
+  padding: 0 10px;
+  border-left: 5px solid #ffc000;
+}

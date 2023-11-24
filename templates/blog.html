@@ -24,7 +24,20 @@
                         </p>
                     {% endif %}
                     {% if paragraph['code'] %}
-                        <pre><code>{{ paragraph['code'] }}</code></pre>
+                        <div class="code-container">
+                            <div class="line-numbers line-numbers-background">
+                            {% for line in paragraph['code'].splitlines() %}
+                                <span>{{ loop.index }}</span>
+                            {% endfor %}
+                            </div>
+                            <code>
+                            {% for line in paragraph['code'].splitlines() %}
+                                <span class="line-highlight">
+                                    <pre class="code-text">{{line}}</pre>
+                                </span>
+                            {% endfor %}
+                            </code>
+                        </div>
                     {% endif %}
                     {% if paragraph['image'] %}
                         <img src="{{ url_for('static', filename=paragraph['image']) }}" />

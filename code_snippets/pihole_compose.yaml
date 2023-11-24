@@ -46,11 +46,9 @@ services:
       - pihole.dnsmasqd:/etc/dnsmasq.d/
     networks:
       - host
-
 networks:
   host:
     external: true
-
 volumes:
     pihole.etc:
     pihole.dnsmasqd:
