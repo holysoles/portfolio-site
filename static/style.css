@@ -28,10 +28,6 @@ header h1 {
   font-size: 2em;
 }
 
-main {
-  margin-top: 20px;
-}
-
 article {
   background-color: #fff;
   padding: 20px;
@@ -45,6 +41,7 @@ article h2 {
 
 article p {
   color: #555;
+  padding: 6px;
 }
 
 footer {
@@ -53,6 +50,10 @@ footer {
   background-color: #333;
   color: #fff;
   text-align: center;
+}
+
+.blog-image {
+  max-width:500px
 }
 
 /* Responsive design for smaller screens */
@@ -89,24 +90,16 @@ footer {
   text-decoration: underline; /* Optional: Underline on hover */
 }
 
-@media screen and (max-width: 768px) {
-  #wsite-title {
-    font-size: 20px; /* Adjust font size for smaller screens */
-  }
-}
-
 /* Navigation styles */
 .navbar {
   background-color: #333;
   padding: 10px;
   text-align: center;
 }
-
 .menu-toggle {
   display: none;
   cursor: pointer;
 }
-
 .bar {
   display: block;
   height: 3px;
@@ -114,29 +107,29 @@ footer {
   background-color: #fff;
   margin: 5px auto;
 }
-
 .nav-list {
   list-style-type: none;
 }
-
 .nav-list li {
   display: inline-block;
   margin-right: 15px;
 }
-
 .nav-list a {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
   transition: color 0.3s ease-in-out;
 }
-
 .nav-list a:hover {
   color: #007bff;
 }
 
 /* Responsive design for smaller screens */
 @media screen and (max-width: 768px) {
+  #wsite-title {
+    font-size: 20px; /* Adjust font size for smaller screens */
+  }
+
   .menu-toggle {
     display: block;
   }
@@ -162,10 +155,10 @@ footer {
   }
 }
 
- /* Style for the code block container */
+ /* Style for code syntax */
 .code-container {
   display: flex;
-  align-items: baseline; /* Align items along the baseline */
+  align-items: baseline;
   background-color: #f4f4f4;
   padding: 10px;
   border-radius: 5px;
@@ -174,34 +167,25 @@ footer {
   line-height: 1.4;
   font-size: 14px;
 }
-
-/* Style for the code text */
 code {
   font-family: 'Courier New', monospace;
   color: #333;
   flex-grow: 1; /* Allow code block to grow and take remaining space */
 }
-
 .code-text {
   margin: 0px;
 }
-
-/* Style for line numbers */
 .line-numbers {
   display: flex;
   flex-direction: column; /* Display line numbers vertically */
   margin-right: 10px;
   color: #999;
 }
-
-/* Optional: Add a background to the line numbers */
 .line-numbers-background {
   background-color: #e0e0e0;
   padding: 0 10px;
   border-radius: 5px 0 0 5px;
 }
-
-/* Optional: Highlight the current line */
 .line-highlight:hover{
   background-color: #ffe8b0;
   display: block;
@@ -209,8 +193,4 @@ code {
   margin-left: -10px;
   padding: 0 10px;
   border-left: 5px solid #ffc000;
-}
-
-.blog-image {
-  max-width:500px
 }

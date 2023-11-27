@@ -1,10 +1,13 @@
 from flask import Flask, render_template
+from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_minify import minify
 import yaml
 from os import listdir
 from os.path import isfile, join, splitext
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+
+minify(app=app, html=True, js=True, cssless=True)
 
 # Proxy setup
 app.wsgi_app = ProxyFix(
