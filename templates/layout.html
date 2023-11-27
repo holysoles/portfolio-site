@@ -3,6 +3,7 @@
     <head>
         <title>Patrick Evans</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     <body>
         <div class="header">
@@ -18,7 +19,7 @@
                     <span class="bar"></span>
                 </div>
                 <ul class="nav-list">
-                    <li><a href="https://github.com/holysoles?tab=repositories" target="_blank">Github</a></li>
+                    <li><a href="https://github.com/holysoles" target="_blank">Github</a></li>
                     <li><a href="http://www.linkedin.com/in/patrickvevans" target="_blank">LinkedIn</a></li>
                     <li><a href="https://www.du-pl.com/" target="_blank">DU-PL App</a></li>
                     <li><a href="{{ url_for('contact') }}">Contact</a></li>
