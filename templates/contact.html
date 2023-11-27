@@ -1,9 +1,20 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div>
-    <h1>Contact Me</h1>
-    <p>
-        <a href="mailto:patrickvevans@gmail.com">patrickvevans@gmail.com</a>
-    </p>
+<div class="contact-container">
+    <h2>Contact Me</h1>
+    <div>
+        <ul class="contact-links">
+            <li class="link-with-logo">
+                <img src="{{ url_for('static', filename='email.svg') }}">
+                <span>Email: </span>
+                <a rel="me" href="mailto:patrickvevans@gmail.com">patrickvevans@gmail.com</a>
+            </li>
+            <li class="link-with-logo">
+                <img src="{{ url_for('static', filename='matrix.svg') }}">
+                <span>Matrix: </span>
+                <a rel="me" href="https://matrix.to/#/@patrick:matrix.donut-lan.com">@patrick:matrix.donut-lan.com</a>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endblock %}

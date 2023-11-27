@@ -44,6 +44,10 @@ article p {
   padding: 6px;
 }
 
+a {
+  transition: color 0.3s ease-in-out;
+}
+
 footer {
   margin-top: 20px;
   padding: 10px 0;
@@ -87,7 +91,8 @@ footer {
   text-decoration: none;
 }
 #wsite-title:hover {
-  text-decoration: underline; /* Optional: Underline on hover */
+  text-decoration: underline;
+  transition: text-decoration 5s ease-in-out;
 }
 
 /* Navigation styles */
@@ -118,10 +123,9 @@ footer {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
-  transition: color 0.3s ease-in-out;
 }
 .nav-list a:hover {
-  color: #007bff;
+  color: #0251ef;
 }
 
 /* Responsive design for smaller screens */
@@ -193,4 +197,35 @@ code {
   margin-left: -10px;
   padding: 0 10px;
   border-left: 5px solid #ffc000;
+}
+
+/* Style for contact page */
+div.contact-container {
+  margin-top: 10px;
+  text-align: center;
+}
+ul.contact-links {
+  list-style-type: none;
+  line-height: 1.75;
+}
+.link-with-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: pre;
+}
+.link-with-logo img {
+  width: 24px; /* Adjust the width as needed */
+  height: 24px; /* Adjust the height as needed */
+  margin-right: 8px;
+}
+.link-with-logo span {
+  font-weight: bold;
+}
+.link-with-logo a {
+  text-decoration: none;
+  color: #333; /* Change the color as needed */
+}
+.link-with-logo a:hover {
+  color: #0251ef;
 }
