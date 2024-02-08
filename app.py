@@ -16,8 +16,8 @@ app.wsgi_app = ProxyFix(
 
 @app.route("/")
 def home():
-    yaml_path = './posts/'
-    code_snippet_path = './code_snippets/'
+    yaml_path = './blog/posts/'
+    code_snippet_path = './blog/code_snippets/'
     dir_files = [join(yaml_path, file) for file in listdir(yaml_path) if isfile(join(yaml_path, file))]
     yaml_files = [file for file in dir_files if splitext(file)[1] == '.yaml']
     yaml_files.sort(reverse=True)
