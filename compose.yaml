@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  site:
+    image: ghcr.io/holysoles/portfolio-site:latest
+    ports:
+      - "5000:5000/tcp"
+    deploy:
+      mode: replicated 
+      replicas: 2
+      update_config:
+        delay: 30s
