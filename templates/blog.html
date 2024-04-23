@@ -1,53 +1,71 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div>
-    <table>
-    {% for post in post_array %}
-        <tr>
-            <td>
-                <article>
-                {% if post['title'] %}
-                    <h2>
-                        {{ post['title'] }} - {{ post['date'] }}
-                    </h2>
-                {% endif %}
-                {% for paragraph in post['body'] %}
-                    <div>
-                    {% if paragraph['section_title'] %}
-                        <h3>
-                            {{ paragraph['section_title'] }}
-                        </h3>
-                    {% endif %}
-                    {% if paragraph['text'] %}
-                        <p>
-                            {{ paragraph['text'] }}
-                        </p>
-                    {% endif %}
-                    {% if paragraph['code'] %}
-                        <div class="code-container">
-                            <div class="line-numbers line-numbers-background">
-                            {% for line in paragraph['code'].splitlines() %}
-                                <span>{{ loop.index }}</span>
+<div class="main-wrapper">
+    <div class="sidebar-container">
+        <aside class="sidebar">
+            <div class="sidebar-body">
+                <ol>
+                    {% for year in date_dict %}
+                        <li class="sidebar-section"> {{ year }} </li>
+                        {% for month in date_dict[year] %}
+                            {% for day in date_dict[year][month] %}
+                            <li> {{ month }} - {{ day }} </li>
                             {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </ol>
+            </div>
+        </aside>
+    </div>
+    <div class="posts">
+        <table>
+        {% for post in post_array %}
+            <tr>
+                <td>
+                    <article>
+                    {% if post['title'] %}
+                        <h2>
+                            {{ post['title'] }} - {{ post['date'] }}
+                        </h2>
+                    {% endif %}
+                    {% for paragraph in post['body'] %}
+                        <div>
+                        {% if paragraph['section_title'] %}
+                            <h3>
+                                {{ paragraph['section_title'] }}
+                            </h3>
+                        {% endif %}
+                        {% if paragraph['text'] %}
+                            <p>
+                                {{ paragraph['text'] }}
+                            </p>
+                        {% endif %}
+                        {% if paragraph['code'] %}
+                            <div class="code-container">
+                                <div class="line-numbers line-numbers-background">
+                                {% for line in paragraph['code'].splitlines() %}
+                                    <span>{{ loop.index }}</span>
+                                {% endfor %}
+                                </div>
+                                <code>
+                                {% for line in paragraph['code'].splitlines() %}
+                                    <span class="line-highlight">
+                                        <pre class="code-text">{{line}}</pre>
+                                    </span>
+                                {% endfor %}
+                                </code>
                             </div>
-                            <code>
-                            {% for line in paragraph['code'].splitlines() %}
-                                <span class="line-highlight">
-                                    <pre class="code-text">{{line}}</pre>
-                                </span>
-                            {% endfor %}
-                            </code>
+                        {% endif %}
+                        {% if paragraph['image'] %}
+                            <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
+                        {% endif %}
                         </div>
-                    {% endif %}
-                    {% if paragraph['image'] %}
-                        <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
-                    {% endif %}
-                    </div>
-                {% endfor %}
-                </article>
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
+                    {% endfor %}
+                    </article>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 </div>
 {% endblock %}
