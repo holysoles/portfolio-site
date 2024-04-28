@@ -3,13 +3,20 @@
 <div class="main-wrapper">
     <div class="sidebar-container">
         <aside class="sidebar">
+            <div class="sidebar-header">
+                Blog Posts
+            </div>
             <div class="sidebar-body">
                 <ol>
                     {% for year in date_dict %}
                         <li class="sidebar-section"> {{ year }} </li>
                         {% for month in date_dict[year] %}
                             {% for day in date_dict[year][month] %}
-                            <li> {{ month }} - {{ day }} </li>
+                            <li>
+                                <a href="{{ date_dict[year][month][day] }}">
+                                    {{ month }}/{{ day }}
+                                </a>
+                            </li>
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
