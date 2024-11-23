@@ -1,0 +1,3 @@
+web_host: 0.0.0.0 # listen on all interfaces (not just loopback)
+mode:
+- wireguard
