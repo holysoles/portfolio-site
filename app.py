@@ -27,9 +27,9 @@ def get_posts():
         link_to_post = "/post?date=" + yaml_file
         # collect datetime info
         datetime_list = re.split('_|\.', yaml_file)
-        file_year = datetime_list[0]
-        file_month = datetime_list[1]
-        file_day = datetime_list[2]
+        file_year = int(datetime_list[0])
+        file_month = int(datetime_list[1])
+        file_day = int(datetime_list[2])
         if file_year in timeline:
             if file_month in timeline[file_year]:
                 timeline[file_year][file_month][file_day] = link_to_post

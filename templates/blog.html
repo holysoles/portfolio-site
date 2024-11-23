@@ -10,8 +10,8 @@
                 <ol>
                     {% for year in date_dict %}
                         <li class="sidebar-section"> {{ year }} </li>
-                        {% for month in date_dict[year] %}
-                            {% for day in date_dict[year][month] %}
+                        {% for month in date_dict[year]|sort(reverse=True) %}
+                            {% for day in date_dict[year][month]|sort %}
                             <li>
                                 <a href="{{ date_dict[year][month][day] }}">
                                     {{ month }}/{{ day }}
