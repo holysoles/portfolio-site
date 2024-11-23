@@ -24,7 +24,10 @@ def get_posts():
     yaml_files.sort(reverse=True)
     timeline = {}
     for yaml_file in yaml_files:
-        link_to_post = "/post?date=" + yaml_file
+        file_dict = {
+            'file_name': yaml_file,
+            'link_to_post': "/post?date=" + yaml_file,
+        }
         # collect datetime info
         datetime_list = re.split('_|\.', yaml_file)
         file_year = int(datetime_list[0])
@@ -32,15 +35,21 @@ def get_posts():
         file_day = int(datetime_list[2])
         if file_year in timeline:
             if file_month in timeline[file_year]:
-                timeline[file_year][file_month][file_day] = link_to_post
+                timeline[file_year][file_month][file_day] = file_dict
             else:
-                timeline[file_year][file_month] = {file_day: link_to_post}
+                timeline[file_year][file_month] = {file_day: file_dict}
         else:
-            timeline[file_year] = {file_month: {file_day: link_to_post}}
+            timeline[file_year] = {file_month: {file_day: file_dict}}
     return yaml_files, timeline
 
-def load_post_data(yaml_files):
+def load_post_data(yaml_files, timeline = {}):
     post_array = []
+    if timeline:
+        yaml_files = []
+        for year in sorted(timeline, reverse=True):
+            for month in sorted(timeline[year], reverse=True):
+                for day in sorted(timeline[year][month]):
+                    yaml_files.append(timeline[year][month][day]['file_name'])
     for yaml_file in yaml_files:
         # load in post text
         with open(join(posts_dir, yaml_file), 'r') as file:
@@ -59,7 +68,7 @@ def load_post_data(yaml_files):
 @app.route("/", methods=['GET'])
 def home():
     yaml_files, timeline = get_posts()
-    post_array = load_post_data(yaml_files)
+    post_array = load_post_data(yaml_files, timeline=timeline)
     return render_template('blog.html', post_array=post_array, date_dict=timeline)
 
 @app.route("/post", methods=['GET'])
