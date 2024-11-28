@@ -13,7 +13,7 @@
                         {% for month in date_dict[year]|sort(reverse=True) %}
                             {% for day in date_dict[year][month]|sort %}
                             <li>
-                                <a href="{{ date_dict[year][month][day] }}">
+                                <a href="{{ date_dict[year][month][day]['link_to_post'] }}">
                                     {{ month }}/{{ day }}
                                 </a>
                             </li>
