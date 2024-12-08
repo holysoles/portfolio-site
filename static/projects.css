@@ -1,0 +1,13 @@
+/* Style for contact page */
+div.project-container {
+    margin-top: 10px;
+    text-align: center;
+  }
+  ul.project-links {
+    list-style-type: none;
+    display: inline-block;
+    line-height: 1.75;
+  }
+  .project {
+    text-align: left;
+  }
