@@ -3,7 +3,7 @@ date: "11/23/2023"
 body:
   - section_title:
     text: "A recent project I worked on was improving the fault tolerance of my home network, specifically DNS. Previously, I was running a single instance of 
-    Pi-hole, which filters out unwanted DNS queries, and forwarded the rest to my upstream Windows Domain Controllers with integrated DNS. From there, queries go 
+    [Pi-hole](https://pi-hole.net/), which filters out unwanted DNS queries, and forwarded the rest to my upstream Windows Domain Controllers with integrated DNS. From there, queries go 
     out to a public resolver. This approach had a few drawbacks. Two issue stemmed from that the Pi-hole instance was running bare-metal on a Raspberry Pi, which 
     while usually reliable, was not tolerant of hardware issues. Patching the Raspberry Pi or rebooting it for other reasons would also cause a DNS service outage,
      which was undesirable. The Raspberry Pi was also being used for other services which occasionally could introduce undesirable system load. Another issue I 
@@ -13,7 +13,7 @@ body:
      Pi-hole instances."
     image: "DNS_diagram.png"
   - section_title: "NetScaler Configuration"
-    text: "Getting a NetScaler instance up and running is actually pretty easy, since as of v12.1, Citrix offers a Freemium licensing option, which is bandwidth 
+    text: "Getting a NetScaler instance up and running is actually pretty easy, since as of v12.1, Citrix offers a [Freemium licensing option](https://docs.netscaler.com/en-us/citrix-adc/current-release/licensing.html), which is bandwidth 
     restricted to 20 Mbps and doesn't provide access to certain features like GSLB or Citrix Gateway, but neither limitation is an issue for this use case. 
     Configuring a simple load balancer for servers on a NetScaler isn't particularly difficult and many general guides exist. At a high level, you need to:"
   - text: "- Define the servers that will provide the DNS service."
@@ -26,7 +26,7 @@ body:
     image: "netscaler_healthcheck.png"
   - section_title: "Pi-hole Container Setup"
     text: "The upstream Pi-hole instances are configured with Docker Compose, deployed as containers on a Docker Swarm cluster, and managed via Portainer.
-      I opted for Docker Swarm over a more complex tool like Kubernetes given the relatively low complexity of this project's requirements. 
+      I opted for [Docker Swarm](https://docs.docker.com/engine/swarm/) over a more complex tool like Kubernetes given the relatively low complexity of this project's requirements. 
       I may follow up with migrating these containers to being managed with Kubernetes in the future. Creating a Docker Swarm and joining nodes to it is fairly 
       straightforward, and Docker's own documentation is pretty great for those steps (link). Managing these Pi-hole containers via Docker Compose and deploying 
       them to the cluster was more complex since not a lot of reference documentation existed. To the side is the Docker Compose YAML used for this. A couple 
