@@ -2,23 +2,51 @@ title: "Using a Transparent Proxy to bypass TLS Fingerprinting"
 date: "11/22/2024"
 body:
   - section_title: "Background"
-  - text: "As an avid user of Home Assistant, I was excited years ago when I found there was an integration to control my car's \"smart\" features from within Home Assistant (remote start, lock, monitor fuel and tire pressure, etc). However Mazda issued a bad-faith DMCA takedown of the Python library that supported it, with no first party alternative to their slow, unresponsive app. See more at Ars Technica: https://arstechnica.com/cars/2023/10/mazdas-dmca-takedown-kills-a-hobbyists-smart-car-api-tool/."
-  - text: While the code continued to function for awhile, this summer Mazda servers began to stop responding to traffic generated from this Python library, and after some testing by myself and other members of the HA community, we determined it was due to an issue with the TLS handshake, possibly TLS fingerprinting. Since this connection expects TLS 1.3, openssl provides limited options for modifying cipher lists, so I investigated transparent proxies as a method to solve this by renegotiating connections.
+  - text: "As an avid user of Home Assistant, I was excited years ago when I found there was an integration to
+     control my car's \"smart\" features from within Home Assistant (remote start, lock, monitor fuel and tire
+     pressure, etc). However Mazda issued a bad-faith DMCA takedown of the Python library that supported it,
+     with no first party alternative to their slow, unresponsive app. Read more at [Ars Technica here](https://arstechnica.com/cars/2023/10/mazdas-dmca-takedown-kills-a-hobbyists-smart-car-api-tool/)."
+  - text: While the code continued to function for awhile, this summer Mazda servers began to stop responding to
+     traffic generated from this Python library, and after some testing by myself and other members of the HA
+     community, we determined it was due to an issue with the TLS handshake, possibly TLS fingerprinting. Since
+     this connection expects TLS 1.3, openssl provides limited options for modifying cipher lists, so I investigated
+     transparent proxies as a method to solve this by renegotiating connections.
   - section_title: "Experimenting"
-  - text: Running the traffic for this integration through a transparent HTTPS proxy allows us to change the TLS fingerprint (JA3/JA4) that the Mazda server sees. I had tested this a few months back running burpsuite on a Kali Linux VM but I had a good deal of trouble getting the connection to be reliable but was mostly using it to troubleshoot the connection.
-  - text: I revisited this the other day with mitmproxy. I initially tried the transparent proxy feature it provides, but was having issues when trying to use a NAT to send it traffic, at which point I discovered the builtin WireGuard proxy, which is also transparent proxy but traffic is sent via a WireGuard client. This pairs excellently with an add-on for Home Assistant that allows it to be a WireGuard client.
-  - text: mitmproxy provides standalone executables but there is also a docker image that works well, I have this deployed in a Kubernetes cluster. I will also note that there is a mitmproxy Home Assistant addon someone was maintaining, but appears to have been recently deprecated.
+  - text: Running the traffic for this integration through a transparent HTTPS proxy allows us to change the TLS
+     fingerprint (JA3/JA4) that the Mazda server sees. I had tested this a few months back running [burpsuite](https://portswigger.net/burp) on
+     a Kali Linux VM but I had a good deal of trouble getting the connection to be reliable but was mostly using
+     it to troubleshoot the connection.
+  - text: I revisited this the other day with mitmproxy. I initially tried the transparent proxy feature it
+     provides, but was having issues when trying to use a NAT to send it traffic, at which point I discovered the
+     builtin WireGuard proxy, which is also transparent proxy but traffic is sent via a WireGuard client. This
+     pairs excellently with an add-on for Home Assistant that allows it to be a WireGuard client.
+  - text: mitmproxy provides standalone executables but there is also a docker image that works well, I have this
+     deployed in a Kubernetes cluster. I will also note that there is a mitmproxy Home Assistant addon someone was
+     maintaining, but appears to have been recently deprecated.
   - section_title: "Setup Steps"
   - text: 1. Prepare configuration for mitmproxy
-  - text: Mitmproxy uses configuration files, which are searched for in the container's /home/mitmproxy/.mitmproxy folder. With this, we can map a volume containing our config files to that folder path.
+  - text: Mitmproxy uses configuration files, which are searched for in the container's /home/mitmproxy/.mitmproxy
+     folder. With this, we can map a volume containing our config files to that folder path.
   - text: "You will need the below config.yaml file:"
   - code: mitmproxy_config.yaml
   - text: If you have your own Certificate Authority, create a PEM encoded private key+cert file named mitmproxy-ca.pem.
-  - text: The below YAML describes the deployment and service resources that I've been using resource is what I'm using in my setup. Note the need to expose the wireguard port as a UDP service.
+  - text: The below YAML describes the deployment and service resources that I've been using resource is what I'm
+     using in my setup. Note the need to expose the wireguard port as a UDP service.
   - code: mitmproxy_k8s.yaml
-  - text: 2. Test accessing the web interface, and save the wireguard client configuration from the Capture menu. Note that when accessing it, you need to access by IP or follow specific reverse proxy setup steps that support its DNS rebinding protection. I have found it easiest for this use case to just access via load balanced IP directly.
-  - text: 3. Get HA to trust your Certificate Authority (or one generated by mitmproxy) with the "hass-additional-ca" addon by Athozs. This is pretty easy and he has good documentation on the project's GitHub page.
-  - text: 4. Install the HA WG client addon and configure it. You'll need to translate the traditional text wireguard config to the YAML expected by the addon, but its fairly easy. For the allowed_ips value, you will need to enter the IPs for (or a CIDR range containing) the two servers for your region from here. Presently, this is what I have for the US.
+  - text: 2. Test accessing the web interface, and save the wireguard client configuration from the Capture menu.
+     Note that when accessing it, you need to access by IP or follow specific reverse proxy setup steps that support
+     its DNS rebinding protection. I have found it easiest for this use case to just access via load balanced IP
+     directly.
+  - text: 3. Get HA to trust your Certificate Authority (or one generated by mitmproxy) with the
+     [hass-additional-ca](https://github.com/Athozs/hass-additional-ca) addon by Athozs. This is pretty easy
+     and he has good documentation on the linked project's GitHub page.
+  - text: 4. Install [the HA WG client addon](https://github.com/bigmoby/addon-wireguard-client) and configure it. You'll need to translate the traditional text
+     wireguard config to the YAML expected by the addon, but its fairly easy. For the allowed_ips value, you will
+     need to enter the IPs for (or a CIDR range containing) the two servers for your region from here. Presently,
+     this is what I have for the US.
   - code: mazda_wg_allowed_ips.yaml
   - section_title: Results
-  - text: While this has allowed me to connect to the Mazda API again and once again unify my smart devices to a single pane of glass, there have been some interruptions to this connection (~95% uptime). Hopefully the community can find a true permanent solution to this connection issue, I know I am still interested in solving this for good.
+  - text: While this has allowed me to connect to the Mazda API again and once again unify my smart devices to a
+     single pane of glass, there have been some interruptions to this connection (~95% uptime). Hopefully the
+     community can find a true permanent solution to this connection issue, I know I am still interested in solving
+     this for good.

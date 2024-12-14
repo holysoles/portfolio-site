@@ -1,10 +1,10 @@
-from flask import Flask, request, render_template
-from werkzeug.middleware.proxy_fix import ProxyFix
-from flask_minify import minify
-import yaml
 import re
 from os import listdir
 from os.path import isfile, join, splitext
+import yaml
+from flask import Flask, request, render_template
+from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_minify import minify
 
 app = Flask(__name__)
 
@@ -55,15 +55,31 @@ def load_post_data(yaml_files, timeline = {}):
         with open(join(posts_dir, yaml_file), 'r') as file:
             post_data = yaml.safe_load(file)
 
-        # parse and preload code snippet files
+        # perform pre-processing
         if post_data.get('body'):
             for body in post_data['body']:
+                # parse and preload code snippet files
                 if body.get('code'):
                     with open(join(code_snippet_path, body['code']), 'r') as file:
                         code_snippet = file.read()
                         body['code'] = code_snippet
+                if body.get('text'):
+                    body['text'] = parse_hyperlinks(body['text'])
         post_array.append(post_data)
     return post_array
+
+def parse_hyperlinks(paragraph: str)-> str:
+    markdown_link_re = re.compile(r'\[[^\[\]]*\]\([^\(\)]*\)')
+    text_re = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
+    link_re = re.compile(r'(?<=\()[^\(\)]*(?=\))')
+    all_hyperlinks = markdown_link_re.finditer(paragraph)
+    for hyperlink in all_hyperlinks:
+        hyperlink_match = hyperlink.group()
+        text = text_re.search(hyperlink_match).group()
+        link = link_re.search(hyperlink_match).group()
+        new_hyperlink = f"<a href=\"{link}\">{text}</a>"
+        paragraph = paragraph.replace(hyperlink_match, new_hyperlink)
+    return paragraph
 
 @app.route("/", methods=['GET'])
 def home():
