@@ -1,3 +1,20 @@
+:root {
+  --bgnd-color: #f5f5f5;
+  --sidebar-bgnd-color: #b9b6b6;
+  --article-bgnd-color: #ffffff;
+  --white-text: #ffffff;
+  --main-text: #333;
+  --article-text: #555;
+  --link-hover-color: #938dfe;
+  --line-num-bgnd-color: #e0e0e0;
+  --line-num-color: #999;
+  --sidebar-section-color: #000000;
+  --sidebar-link-color: #3b3b3b;
+  
+  /* margins/padding */
+  --sidebar-width: 130px;
+}
+
 /* Reset some default styles for better consistency across browsers */
 body, h1, h2, h3, p, ul, ol, li {
   margin: 0;
@@ -8,8 +25,8 @@ body, h1, h2, h3, p, ul, ol, li {
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: var(--bgnd-color);
+  color: var(--main-text);
 }
 
 .container {
@@ -18,29 +35,24 @@ body {
   padding: 20px;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 0;
-}
 
-header h1 {
+h1 {
   font-size: 2em;
 }
 
 article {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
+  background-color: var(--article-bgnd-color);
+  padding: 1.875rem;
+  margin: 3.75rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 article h2 {
-  color: #333;
+  color: var(--main-text);
 }
 
 article p {
-  color: #555;
+  color: var(--article-text);
   padding: 6px;
 }
 
@@ -58,7 +70,7 @@ a {
     font-size: 16px;
   }
 
-  header h1 {
+  h1 {
     font-size: 1.5em;
   }
 
@@ -71,6 +83,7 @@ a {
   }
 }
 
+
 /* Header title style */
 .titlebar {
   text-align: center;
@@ -78,7 +91,7 @@ a {
 #wsite-title {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  color: #333; /* Adjust the color to your liking */
+  color: var(--main-text); /* Adjust the color to your liking */
   letter-spacing: 1px;
   text-decoration: none;
 }
@@ -87,9 +100,10 @@ a {
   transition: text-decoration 5s ease-in-out;
 }
 
+
 /* Navigation styles */
 .navbar {
-  background-color: #333;
+  background-color: var(--main-text);
   padding: 10px;
   text-align: center;
 }
@@ -101,7 +115,7 @@ a {
   display: block;
   height: 3px;
   width: 25px;
-  background-color: #fff;
+  background-color: var(--white-text);
   margin: 5px auto;
 }
 .nav-list {
@@ -113,11 +127,11 @@ a {
 }
 .nav-list a {
   text-decoration: none;
-  color: #fff;
+  color: var(--white-text);
   font-weight: bold;
 }
 .nav-list a:hover {
-  color: #0251ef;
+  color: var(--link-hover-color);
 }
 
 /* Responsive design for smaller screens */
@@ -134,7 +148,6 @@ a {
     display: none;
     text-align: left;
     padding: 10px;
-    background-color: #333;
   }
 
   .nav-list li {
@@ -151,11 +164,12 @@ a {
   }
 }
 
- /* Style for code syntax */
+
+/* Style for code syntax */
 .code-container {
   display: flex;
   align-items: baseline;
-  background-color: #f4f4f4;
+  background-color: var(--bgnd-color);
   padding: 10px;
   border-radius: 5px;
   margin: 10px 0;
@@ -165,7 +179,7 @@ a {
 }
 code {
   font-family: 'Courier New', monospace;
-  color: #333;
+  color: var(--main-text);
   flex-grow: 1; /* Allow code block to grow and take remaining space */
 }
 .code-text {
@@ -175,10 +189,10 @@ code {
   display: flex;
   flex-direction: column; /* Display line numbers vertically */
   margin-right: 10px;
-  color: #999;
+  color: var(--line-num-color);
 }
 .line-numbers-background {
-  background-color: #e0e0e0;
+  background-color: var(--line-num-bgnd-color);
   padding: 0 10px;
   border-radius: 5px 0 0 5px;
 }
@@ -192,39 +206,33 @@ code {
 }
 
 .header {
-  background-color: #f5f5f5;
-  position: fixed; /* Set header position to fixed */
+  background-color: var(--bgnd-color);
+  position: fixed;
   top: 0; /* Align it to the top of the page */
-  width: 100%; /* Set header width to full width */
+  width: 100%;
   z-index: 999; /* Ensure the header is above other content */
-  /* Your existing styles for header */
 }
 
 .content {
-  padding-top: 80px; /* Adjust padding to accommodate the fixed header */
-  /* Your existing styles for content */
+  padding-top: 1.25rem; /* Padding to accommodate the fixed header */
 }
+
 
 /* Style for sidebar */
 .sidebar {
   height: 100%;
   width: 130px;
-  left: 0;
   position: fixed;
-  background-color: #b9b6b6;
+  background-color: var(--sidebar-bgnd-color);
   overflow-x: hidden;
   padding-top: 12px;
-}
-
-.sidebar-header {
-  font-size: 18px;
   text-align: center;
+  font-size: 18px;
 }
 
 .sidebar-section {
   font-weight: bold;
-  color: #000000;
-  font-size: 18px;
+  color: var(--sidebar-section-color);
   padding: 8px;
 }
 
@@ -232,14 +240,13 @@ code {
   padding: 2px 16px;
   text-decoration: none;
   display: block;
-  color: #3b3b3b;
+  color: var(--sidebar-link-color);
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: var(--link-hover-color);
 }
 
 .posts {
-  margin-left: 130px; /* Same as the width of the sidebar */
-  padding: 0px 10px;
+  margin-left: var(--sidebar-width);
 }
