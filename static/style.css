@@ -19,6 +19,7 @@ body {
   /* margins/padding */
   --sidebar-width: 130px;
   --box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  --code-line-height: 1.5em;
 
 }
 
@@ -196,7 +197,7 @@ a {
   border-radius: 5px;
   margin: 10px 0;
   overflow-x: auto; /* Enable horizontal scrolling for long lines of code */
-  line-height: 1.4;
+  line-height: var(--code-line-height);
   font-size: 14px;
 }
 code {
@@ -206,6 +207,7 @@ code {
 }
 .code-text {
   margin: 0px;
+  height: var(--code-line-height);
 }
 .line-numbers {
   display: flex;
