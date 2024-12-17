@@ -1,6 +1,6 @@
 import re
 from os import listdir
-from os.path import isfile, join, splitext
+from os.path import join, splitext
 import yaml
 from flask import Flask, request, render_template
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -85,7 +85,7 @@ def parse_hyperlinks(paragraph: str)-> str:
 def home():
     yaml_files, timeline = get_posts()
     post_array = load_post_data(yaml_files, timeline=timeline)
-    return render_template('blog.html', post_array=post_array, date_dict=timeline)
+    return render_template('blog.html.j2', post_array=post_array, date_dict=timeline)
 
 @app.route("/post", methods=['GET'])
 def post():
@@ -94,13 +94,13 @@ def post():
         yaml_files, timeline = get_posts()
         if req_post in yaml_files:
             post = load_post_data([req_post])
-            return render_template('blog.html', post_array=post, date_dict=timeline)
+            return render_template('blog.html.j2', post_array=post, date_dict=timeline)
     return "Post not found", 404
 
 @app.route("/contact", methods=['GET'])
 def contact():
-    return render_template('contact.html')
+    return render_template('contact.html.j2')
 
 @app.route("/projects", methods=["GET"])
 def projects():
-    return render_template('projects.html')
+    return render_template('projects.html.j2')

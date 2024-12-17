@@ -1,4 +1,3 @@
-/* Style for contact page */
 div.contact-container {
     margin-top: 10px;
     text-align: center;
@@ -23,7 +22,6 @@ div.contact-container {
   }
   .link-with-logo a {
     text-decoration: none;
-    color: #333; /* Change the color as needed */
   }
   .link-with-logo a:hover {
     color: #0251ef;
