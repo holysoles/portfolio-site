@@ -25,54 +25,48 @@
         </aside>
     </div>
     <div class="posts">
-        <table>
         {% for post in post_array %}
-            <tr>
-                <td>
-                    <article>
-                    {% if post['title'] %}
-                        <h2>
-                            {{ post['title'] }} - {{ post['date'] }}
-                        </h2>
-                    {% endif %}
-                    {% for paragraph in post['body'] %}
-                        <div>
-                        {% if paragraph['section_title'] %}
-                            <h3>
-                                {{ paragraph['section_title'] }}
-                            </h3>
-                        {% endif %}
-                        {% if paragraph['text'] %}
-                            <p>
-                                {{ paragraph['text'] | safe }}
-                            </p>
-                        {% endif %}
-                        {% if paragraph['code'] %}
-                            <div class="code-container">
-                                <div class="line-numbers line-numbers-background">
-                                {% for line in paragraph['code'].splitlines() %}
-                                    <span>{{ loop.index }}</span>
-                                {% endfor %}
-                                </div>
-                                <code>
-                                {% for line in paragraph['code'].splitlines() %}
-                                    <span class="line-highlight">
-                                        <pre class="code-text">{{line}}</pre>
-                                    </span>
-                                {% endfor %}
-                                </code>
-                            </div>
-                        {% endif %}
-                        {% if paragraph['image'] %}
-                            <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
-                        {% endif %}
+        <article>
+            {% if post['title'] %}
+                <h2>
+                    {{ post['title'] }} - {{ post['date'] }}
+                </h2>
+            {% endif %}
+            {% for paragraph in post['body'] %}
+                <div>
+                {% if paragraph['section_title'] %}
+                    <h3>
+                        {{ paragraph['section_title'] }}
+                    </h3>
+                {% endif %}
+                {% if paragraph['text'] %}
+                    <p>
+                        {{ paragraph['text'] | safe }}
+                    </p>
+                {% endif %}
+                {% if paragraph['code'] %}
+                    <div class="code-container">
+                        <div class="line-numbers line-numbers-background">
+                        {% for line in paragraph['code'].splitlines() %}
+                            <span>{{ loop.index }}</span>
+                        {% endfor %}
                         </div>
-                    {% endfor %}
-                    </article>
-                </td>
-            </tr>
+                        <code>
+                        {% for line in paragraph['code'].splitlines() %}
+                            <span class="line-highlight">
+                                <pre class="code-text">{{line}}</pre>
+                            </span>
+                        {% endfor %}
+                        </code>
+                    </div>
+                {% endif %}
+                {% if paragraph['image'] %}
+                    <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
+                {% endif %}
+                </div>
+            {% endfor %}
+        </article>
         {% endfor %}
-        </table>
     </div>
 </div>
 {% endblock %}
