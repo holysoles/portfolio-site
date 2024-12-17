@@ -33,7 +33,6 @@ services:
       DNSMASQ_LISTENING: 'all'
       DNS_BOGUS_PRIV: 'true'
       DNS_FQDN_REQUIRED: 'true'
-
       PIHOLE_DNS_: '192.168.1.5;192.168.1.6;fe80::b1f2:c67d:5464:e10f;fe80::f576:da56:d322:4dc'
       REV_SERVER: 'true'
       REV_SERVER_CIDR: '192.168.0.0/16'
