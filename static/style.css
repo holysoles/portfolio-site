@@ -1,18 +1,49 @@
-:root {
-  --bgnd-color: #f5f5f5;
-  --sidebar-bgnd-color: #b9b6b6;
-  --article-bgnd-color: #ffffff;
+body {
+  /* colors */
+  --link-hover-color: #938dfe;
+  --code-hover-color-border: #ffc000;
+  --header-bgnd-color: #333;
   --white-text: #ffffff;
+
+  /* light mode */
+  --bgnd-color: #f5f5f5;
+  --article-bgnd-color: #ffffff;
   --main-text: #333;
   --article-text: #555;
-  --link-hover-color: #938dfe;
-  --line-num-bgnd-color: #e0e0e0;
-  --line-num-color: #999;
-  --sidebar-section-color: #000000;
-  --sidebar-link-color: #3b3b3b;
+  --code-hover-color: #ffe8b0;
   
   /* margins/padding */
   --sidebar-width: 130px;
+}
+
+/* dark mode */
+body.alt-color-mode { 
+  --bgnd-color: #0000006d;
+  --article-bgnd-color: #333;
+  --main-text: #f5f5f5;
+  --article-text: #f5f5f5c9;
+  --code-hover-color: #ffe9b08a;
+}
+
+/* if browser asks for dark mode */
+@media (prefers-color-scheme: dark) {
+  /* light mode */
+  body { 
+    --bgnd-color: #0000006d;
+    --article-bgnd-color: #333;
+    --main-text: #f5f5f5;
+    --article-text: #f5f5f5c9;
+    --code-hover-color: #ffe9b08a;
+  }
+
+  /* dark mode */
+  body.alt-color-mode { 
+    --bgnd-color: #f5f5f5;
+    --article-bgnd-color: #ffffff;
+    --main-text: #333;
+    --article-text: #555;
+    --code-hover-color: #ffe8b0;
+  }
 }
 
 /* Reset some default styles for better consistency across browsers */
@@ -34,7 +65,6 @@ body {
   margin: 0 auto;
   padding: 20px;
 }
-
 
 h1 {
   font-size: 2em;
@@ -85,27 +115,32 @@ a {
 
 
 /* Header title style */
-.titlebar {
+.header {
+  top: 0; /* Align it to the top of the page */
+  width: 100%;
+  z-index: 999; /* Ensure the header is above other content */
+  position: fixed;
   text-align: center;
+  background-color: var(--header-bgnd-color);
+}
+.header a:hover {
+  color: var(--link-hover-color);
 }
 #wsite-title {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  color: var(--main-text); /* Adjust the color to your liking */
+  color: var(--white-text); /* Adjust the color to your liking */
   letter-spacing: 1px;
   text-decoration: none;
 }
-#wsite-title:hover {
-  text-decoration: underline;
-  transition: text-decoration 5s ease-in-out;
-}
-
 
 /* Navigation styles */
 .navbar {
-  background-color: var(--main-text);
   padding: 10px;
-  text-align: center;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .menu-toggle {
   display: none;
@@ -119,7 +154,10 @@ a {
   margin: 5px auto;
 }
 .nav-list {
+  display: flex;
   list-style-type: none;
+  flex-grow: 1;
+  justify-content: center; 
 }
 .nav-list li {
   display: inline-block;
@@ -130,8 +168,14 @@ a {
   color: var(--white-text);
   font-weight: bold;
 }
-.nav-list a:hover {
-  color: var(--link-hover-color);
+.options {
+  margin-left: auto;
+}
+.options button {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.1rem;
 }
 
 /* Responsive design for smaller screens */
@@ -189,50 +233,41 @@ code {
   display: flex;
   flex-direction: column; /* Display line numbers vertically */
   margin-right: 10px;
-  color: var(--line-num-color);
+  color: var(--article-text);
 }
 .line-numbers-background {
-  background-color: var(--line-num-bgnd-color);
+  background-color: var(--article-bgnd-color);
   padding: 0 10px;
   border-radius: 5px 0 0 5px;
 }
 .line-highlight:hover{
-  background-color: #ffe8b0;
+  background-color: var(--code-hover-color);
   display: block;
   margin-right: -10px;
   margin-left: -10px;
   padding: 0 10px;
-  border-left: 5px solid #ffc000;
-}
-
-.header {
-  background-color: var(--bgnd-color);
-  position: fixed;
-  top: 0; /* Align it to the top of the page */
-  width: 100%;
-  z-index: 999; /* Ensure the header is above other content */
+  border-left: 5px solid var(--code-hover-color-border);
 }
 
 .content {
-  padding-top: 1.25rem; /* Padding to accommodate the fixed header */
+  padding-top: 6rem; /* accommodate the fixed header */
 }
 
 
 /* Style for sidebar */
 .sidebar {
-  height: 100%;
   width: 130px;
   position: fixed;
-  background-color: var(--sidebar-bgnd-color);
+  background-color: var(--article-bgnd-color);
   overflow-x: hidden;
-  padding-top: 12px;
+  padding: 12px 0px;
   text-align: center;
   font-size: 18px;
 }
 
 .sidebar-section {
   font-weight: bold;
-  color: var(--sidebar-section-color);
+  color: var(--main-text);
   padding: 8px;
 }
 
@@ -240,7 +275,7 @@ code {
   padding: 2px 16px;
   text-decoration: none;
   display: block;
-  color: var(--sidebar-link-color);
+  color: var(--article-text);
 }
 
 .sidebar a:hover {

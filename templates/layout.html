@@ -6,14 +6,13 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='contact.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='projects.css') }}" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta name="color-scheme" content="dark light">
     </head>
     <body>
         <div class="header">
-            <div class="titlebar">
-                <span>
-                    <a id="wsite-title" href="{{ url_for('home') }}">Patrick Evans</a>
-                </span>
-            </div>
+            <span>
+                <a id="wsite-title" href="{{ url_for('home') }}">Patrick Evans</a>
+            </span>
             <nav class="navbar">
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -26,6 +25,9 @@
                     <li><a href="http://www.linkedin.com/in/patrickvevans" target="_blank">LinkedIn</a></li>
                     <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
+                <div class="options">
+                    <button onclick='document.body.classList.toggle("alt-color-mode")'>🌙</button>
+                </div>
             </nav>  
         </div>
         <div class="content">
