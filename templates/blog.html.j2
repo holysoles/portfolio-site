@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html.j2' %}
 {% block content %}
 <div class="main-wrapper">
     <div class="sidebar-container">
@@ -29,8 +29,11 @@
         <article>
             {% if post['title'] %}
                 <h2>
-                    {{ post['title'] }} - {{ post['date'] }}
+                    {{ post['title'] }}
                 </h2>
+                <h4>
+                    {{ post['date'] }}
+                </h4>
             {% endif %}
             {% for paragraph in post['body'] %}
                 <div>
