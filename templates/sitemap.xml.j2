@@ -1,25 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-
          xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-
          xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-   {% for page in static_pages %}
+   
+   {%- for page in static_pages -%}
    <url>
       <loc>{{ host_url + page }}</loc>
       <lastmod>{{ default_last_mod }}</lastmod>
    </url>
-   {% endfor %}
-   {% for year in blog_posts %}
-      {% for month in blog_posts[year]|sort(reverse=True) %}
-         {% for day in blog_posts[year][month]|sort %}
+   {%- endfor -%}
+   {%- for year in blog_posts -%}
+      {%- for month in blog_posts[year]|sort(reverse=True) -%}
+         {%- for day in blog_posts[year][month]|sort -%}
    <url>
       <loc>{{ host_url + blog_posts[year][month][day]['link_to_post'] }}</loc>
-      <lastmod>{{year}}-{{month}}-{{day}}</lastmod>
+      <lastmod>{{ year }}-{{ '%02d' % month }}-{{ '%02d' % day }}</lastmod>
    </url>
-         {% endfor %}
-      {% endfor %}
-   {% endfor %}
+         {%- endfor -%}
+      {%- endfor -%}
+   {%- endfor -%}
 </urlset>
