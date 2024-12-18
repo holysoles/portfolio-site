@@ -1,5 +1,6 @@
-# Use the official Python 3.8 slim image as the base image
 FROM python:3.10-slim
+
+ARG BUILD_DATE
 
 WORKDIR /app
 
@@ -12,5 +13,8 @@ COPY app.py requirements.txt  ./
 # Upgrade pip and install Python dependencies
 RUN pip3 install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000", "-w", "4"]
+ENV PORT=5000
+ENV BUILD_DATE=$BUILD_DATE
+ENV GUNICORN_CMD_ARGS="--bind 0.0.0.0:${PORT} --workers 4"
+EXPOSE ${PORT}/tcp
+CMD ["gunicorn", "app:app"]

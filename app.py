@@ -1,12 +1,14 @@
 import re
-from os import listdir
+from os import listdir, getenv
 from os.path import join, splitext
 import yaml
-from flask import Flask, request, render_template
+from flask import Flask, request, Response, render_template, url_for
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_minify import minify
 
-app = Flask(__name__)
+DEFAULT_LAST_MOD = getenv('BUILD_DATE') 
+
+app = Flask(__name__, static_folder='static', static_url_path='')
 
 minify(app=app, html=True, js=True, cssless=True)
 
@@ -104,3 +106,22 @@ def contact():
 @app.route("/projects", methods=["GET"])
 def projects():
     return render_template('projects.html.j2')
+
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
+@app.route("/sitemap.xml", methods=["GET"])
+def sitemap():
+    static_pages = []
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            static_pages.append(url)
+
+    _, timeline = get_posts()
+    xml = render_template('sitemap.xml.j2', host_url=request.host_url[:-1], static_pages=static_pages, blog_posts=timeline, default_last_mod=DEFAULT_LAST_MOD)
+    r = Response(response=xml, status=200, mimetype="application/xml")
+    r.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return r
