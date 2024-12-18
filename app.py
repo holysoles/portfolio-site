@@ -1,16 +1,31 @@
 import re
 from os import listdir, getenv
 from os.path import join, splitext
+import base64
 import yaml
 from flask import Flask, request, Response, render_template, url_for
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_minify import minify
 
-DEFAULT_LAST_MOD = getenv('BUILD_DATE') 
+DEFAULT_LAST_MOD = getenv('BUILD_DATE')
+CONTACT_INFO = [
+    {
+        "label": "Email",
+        "icon": "email.svg",
+        "text": "patrickvevans@gmail.com",
+        "href": "mailto:patrickvevans@gmail.com",
+    },
+    {
+        "label": "Matrix",
+        "icon": "matrix.svg",
+        "text": "@holysoles:beeper.com",
+        "href": "https://matrix.to/#/@holysoles:beeper.com",
+    },
+]
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
-minify(app=app, html=True, js=True, cssless=True)
+minify(app=app, html=True, js=True, cssless=True, static=True)
 
 # Proxy setup
 app.wsgi_app = ProxyFix(
@@ -99,9 +114,17 @@ def post():
             return render_template('blog.html.j2', post_array=post, date_dict=timeline)
     return "Post not found", 404
 
+def encode_contact_info(contact_info):
+    encode_type = "utf-8"
+    for dict in contact_info:
+        dict["href"] = base64.b64encode(dict["href"].encode(encode_type)).decode(encode_type)
+        dict["text"] = base64.b64encode(dict["text"].encode(encode_type)).decode(encode_type)
+    return contact_info
+
+encoded_contact_info = encode_contact_info(CONTACT_INFO)
 @app.route("/contact", methods=['GET'])
 def contact():
-    return render_template('contact.html.j2')
+    return render_template('contact.html.j2', contact_info=encoded_contact_info)
 
 @app.route("/projects", methods=["GET"])
 def projects():
