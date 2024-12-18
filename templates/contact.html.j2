@@ -4,16 +4,13 @@
     <h2>Contact Me</h1>
     <div>
         <ul class="contact-links">
+           {% for item in contact_info %}
             <li class="link-with-logo">
-                <img src="{{ url_for('static', filename='email.svg') }}">
-                <span>Email: </span>
-                <a rel="me" href="mailto:patrickvevans@gmail.com">patrickvevans@gmail.com</a>
+                <img src="{{ url_for('static', filename=item["icon"]) }}">
+                <span>{{ item["label"] + ": "}}</span>
+                <a class="mask" rel="me" href="{{ item["href"] }}">{{ item["text"] }}</a>
             </li>
-            <li class="link-with-logo">
-                <img src="{{ url_for('static', filename='matrix.svg') }}">
-                <span>Matrix: </span>
-                <a rel="me" href="https://matrix.to/#/@holysoles:beeper.com">@holysoles:beeper.com</a>
-            </li>
+            {% endfor %}
         </ul>
     </div>
 </div>
