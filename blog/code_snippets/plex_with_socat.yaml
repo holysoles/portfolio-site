@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: plex
+  name: plex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      containers:
+        - image: plexinc/pms-docker:1.41.3.9314-a0bfb8370
+          name: plex
+          env: [] # your env vars here
+          volumeMounts: [] # your volume mounts here
+        - image: alpine/socat:1.8.0.0
+          name: socat
+          command: ["socat", "-d", "-d", "-v", "udp4-recvfrom:65001,broadcast,fork", "udp4-sendto:192.168.20.20:65001"] # replace 192.168.20.20 with your HD Home Run's ip
+      volumes: [] # your volumes here
