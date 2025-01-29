@@ -5,6 +5,8 @@ body {
   --header-bgnd-color: #333;
   --white-text: #ffffff;
   --sidebar-bgnd-color: var(--article-bgnd-color);
+  --link-visited-color: #2b81dd;
+
 
   /* light mode */
   --bgnd-color: #f5f5f5;
@@ -15,7 +17,7 @@ body {
   --article-text: #555;
   --code-hover-color: #ffe8b0;
   --dark-mode-icon: "☾";
-  
+  --link-color: #7516ff;
   /* margins/padding */
   --sidebar-width: 130px;
   --box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
@@ -33,6 +35,7 @@ body.alt-color-mode {
   --article-text: #f5f5f5c9;
   --code-hover-color: #ffe9b08a;
   --dark-mode-icon: "☀︎";
+  --link-color: #938dfe;
 }
 
 /* if browser asks for dark mode */
@@ -46,7 +49,8 @@ body.alt-color-mode {
     --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
     --article-text: #f5f5f5c9;
     --code-hover-color: #ffe9b08a;
-    --dark-mode-icon: "☾";
+    --dark-mode-icon: "☀︎";
+    --link-color: #938dfe;
   }
 
   /* light mode */
@@ -58,7 +62,8 @@ body.alt-color-mode {
     --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
     --article-text: #555;
     --code-hover-color: #ffe8b0;
-    --dark-mode-icon: "☀︎";
+    --dark-mode-icon: "☾";
+    --link-color: #7516ff;
   }
 }
 
@@ -109,6 +114,12 @@ article p {
 
 a {
   transition: color 0.3s ease-in-out;
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+a:visited {
+  color: var(--link-visited-color);
 }
 
 .blog-image {

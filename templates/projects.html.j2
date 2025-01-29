@@ -7,22 +7,69 @@
         <ul class="project-links">
             <li class="project">
                 <a rel="me" href="https://pve.dev">This Site</a>
-                <span> - Blog and portfolio site</span>
+                <span> - Blog and portfolio site, based on <a href="https://github.com/holysoles/portfolio-site">Flask and Jinja2</a></span>
             </li>
             <li class="project">
                 <a rel="me" href="https://searx.pve.dev">SearXNG</a>
                 <span> - Instance of SearXNG, a privacy-oriented meta-search engine</span>
             </li>
+            <li class="project">
+                <a href="https://github.com/bluesky-social/pds">Bluesky PDS</a>
+                <span> - A personal data server for Bluesky and other AT Protocol apps</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/beeper/bridge-manager">Beeper Bridges</a>
+                <span> - Bridges to connect messaging platforms to Beeper</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/pi-hole/pi-hole">Pi-hole</a>
+                <span> - DNS filtering and ad-blocker</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/itzg/docker-minecraft-server">Minecraft Server</a>
+                <span> - Game server for Minecraft, with <a href="https://github.com/holysoles/ginrcon">ginrcon</a> for server management</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/jammsen/docker-palworld-dedicated-server">Palworld Server</a>
+                <span> - Game server for Palworld, with <a href="https://github.com/holysoles/ginrcon">ginrcon</a> for server management</span>
+            </li>
         </ul>
     </div>
     <h3>Deployed on AWS Lambda (Serverless)</h3>
-    <ul class="project-links">
-        <li class="project">
-            <a rel="me" href="https://www.du-pl.com/">DU-PL</a>
+    <div>
+        <ul class="project-links">
+            <li class="project">
+                <a rel="me" href="https://www.du-pl.com/">DU-PL</a>
             <span> - A crowdsource drink prices app, see </span>
             <a rel="me" href="{{ url_for('post', date='2020_6_2.yaml') }}">this blog post</a>
             <span>.</span>
         </li>
-    </ul>
+        </ul>
+    </div>
+    <h2>Supporting Technologies</h2>
+    <div>
+        <ul class="project-links">
+            <li class="project">
+                <a href="https://github.com/fluxcd/flux2">Flux2</a>
+            <span> - GitOps tool for managing Kubernetes clusters</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/traefik/traefik">Traefik</a>
+                <span> - Ingress controller for Kubernetes and application reverse proxy</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/smallstep/certificates">Step Certificates</a>
+                <span> - Self-hosted certificate authority with ACME support</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/cert-manager/cert-manager">Cert-Manager</a>
+                <span> - Kubernetes certificate manager</span>
+            </li>
+            <li class="project">
+                <a href="https://github.com/metallb/metallb">MetalLB</a>
+                <span> - Load balancer for Kubernetes</span>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
