@@ -28,11 +28,13 @@ body:
   - text: Mitmproxy uses configuration files, which are searched for in the container's /home/mitmproxy/.mitmproxy
      folder. With this, we can map a volume containing our config files to that folder path.
   - text: "You will need the below config.yaml file:"
-  - code: mitmproxy_config.yaml
+  - code:
+      file_name: "mitmproxy_config.yaml"
   - text: If you have your own Certificate Authority, create a PEM encoded private key+cert file named mitmproxy-ca.pem.
   - text: The below YAML describes the deployment and service resources that I've been using resource is what I'm
      using in my setup. Note the need to expose the wireguard port as a UDP service.
-  - code: mitmproxy_k8s.yaml
+  - code:
+      file_name: "mitmproxy_k8s.yaml"
   - text: 2. Test accessing the web interface, and save the wireguard client configuration from the Capture menu.
      Note that when accessing it, you need to access by IP or follow specific reverse proxy setup steps that support
      its DNS rebinding protection. I have found it easiest for this use case to just access via load balanced IP
@@ -44,7 +46,8 @@ body:
      wireguard config to the YAML expected by the addon, but its fairly easy. For the allowed_ips value, you will
      need to enter the IPs for (or a CIDR range containing) the two servers for your region from here. Presently,
      this is what I have for the US.
-  - code: mazda_wg_allowed_ips.yaml
+  - code:
+      file_name: "mazda_wg_allowed_ips.yaml"
   - section_title: Results
   - text: While this has allowed me to connect to the Mazda API again and once again unify my smart devices to a
      single pane of glass, there have been some interruptions to this connection (~95% uptime). Hopefully the

@@ -77,9 +77,10 @@ def load_post_data(yaml_files, timeline = {}):
             for body in post_data['body']:
                 # parse and preload code snippet files
                 if body.get('code'):
-                    with open(join(code_snippet_path, body['code']), 'r') as file:
+                    with open(join(code_snippet_path, body['code']['file_name']), 'r') as file:
                         code_snippet = file.read()
-                        body['code'] = code_snippet
+                        body['code']['type'] = splitext(body['code']['file_name'])[1].replace('.', '')
+                        body['code']['content'] = code_snippet
                 if body.get('text'):
                     body['text'] = parse_hyperlinks(body['text'])
         post_array.append(post_data)

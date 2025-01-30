@@ -40,7 +40,8 @@ body:
       Client Group Management, and others. For these settings, I recommend exporting/importing via the Teleporter backup feature under the settings page. 
       These will be stored in the \"pihole.etc\" volume."
   - section_title: Example Compose File
-    code: "pihole_compose.yaml"
+    code:
+      file_name: "pihole_compose.yaml"
   - section_title: "Takeaways"
     text: "Advantages:"
   - text: "- A single IP to point to for DNS queries reduces network complexity"

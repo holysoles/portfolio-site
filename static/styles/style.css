@@ -11,6 +11,7 @@ body {
   /* light mode */
   --bgnd-color: #f5f5f5;
   --article-bgnd-color: #ffffff;
+  --divider-color: #5555553b;
   --mobile-sidebar-bgnd-color: #333;
   --main-text: #333;
   --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
@@ -29,6 +30,7 @@ body {
 body.alt-color-mode { 
   --bgnd-color: #0000006d;
   --article-bgnd-color: #333;
+  --divider-color: #f5f5f5c9;
   --mobile-sidebar-bgnd-color: #5f5c59;
   --main-text: #f5f5f5;
   --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
@@ -44,6 +46,7 @@ body.alt-color-mode {
   body { 
     --bgnd-color: #0000006d;
     --article-bgnd-color: #333;
+    --divider-color: #f5f5f5c9;
     --mobile-sidebar-bgnd-color: #5f5c59;
     --main-text: #f5f5f5;
     --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
@@ -58,6 +61,7 @@ body.alt-color-mode {
     --bgnd-color: #f5f5f5;
     --article-bgnd-color: #ffffff;
     --mobile-sidebar-bgnd-color: #e0e0e0;
+    --divider-color: #5555553b;
     --main-text: #333;
     --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
     --article-text: #555;
@@ -201,12 +205,29 @@ a:visited {
 
 /* Style for code syntax */
 .code-container {
+  background-color: var(--bgnd-color);
+}
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-left: 1.0rem;
+  padding-right: 1.0rem;
+  padding-bottom: 0.5rem;
+
+  /* height: 5px; */
+  border-bottom: 1px solid var(--divider-color);
+  line-height: 80%;
+}
+.code-actions button {
+  z-index: 100;
+}
+.code-body {
   display: flex;
   align-items: baseline;
-  background-color: var(--bgnd-color);
   padding: 10px;
   border-radius: 5px;
-  margin: 10px 0;
   overflow-x: auto; /* Enable horizontal scrolling for long lines of code */
   line-height: var(--code-line-height);
   font-size: 14px;

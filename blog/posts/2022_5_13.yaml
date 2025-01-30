@@ -19,6 +19,9 @@ body:
   - text: When I first implemented this setup, I was using a Raspberry Pi as the gateway into my home network. However, I soon realized this task was best suited for my Router. I have a Ubiquiti router that runs their EdgeOS, which doesn't have native WireGuard support. I was able to find this fantastic WireGuard package that allows for implementing WireGuard on vyatta, which EdgeOS is built on top of. Since vyatta is a fork of Debian linux, getting this configured was fairly straightforward. Their Github wiki covers these steps in details.
   - text: I route a 10.10.0.0/16 network through the VPN. Initially this was just a single /24 subnet, but I've found having each client correspond to a single network interface on the AWS server will allow for special configuration, such as mDNS reflection, without causing a reflection loop. This is next on my list to get implemented, since it allows access to even more services on my home network. 
   - section_title: "Configuration Details"
-  - code: "wireguard_hub.conf"
-  - code: "wireguard_lan.conf"
-  - code: "wireguard_client.conf"
+  - code:
+      file_name: "wireguard_hub.conf"
+  - code:
+      file_name: "wireguard_lan.conf"
+  - code:
+      file_name: "wireguard_client.conf"

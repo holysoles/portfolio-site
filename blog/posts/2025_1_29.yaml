@@ -12,7 +12,8 @@ body:
       As [meckhert on the Unifi forum](https://community.ui.com/questions/Howto-HDHomerun-discovery-on-different-LAN-segment/97db52c6-4add-4ba1-ab0d-27ee6f43db8f) shared, socat can be used to handle the VLAN traversal. 
       In our case it can also handle the NATing issues from inside the Kubernetes cluster! By running socat in a sidecar container with Plex, it will be able to receive the broadcast packets Plex sends out, and forward them directly to the HDHomeRun device."
   - text: "An example deployment of this:"
-  - code: "plex_with_socat.yaml"
+  - code:
+      file_name: "plex_with_socat.yaml"
   - text: "Don't forget to setup any firewall rules. I found the following needed to be allowed between my IOT and Kubernetes VLANs:"
   - text: "Allow HDHomeRun Discovery"
   - text: "- Protocol: IPv4 UDP"
