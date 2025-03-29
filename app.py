@@ -41,9 +41,10 @@ def get_posts():
     yaml_files.sort(reverse=True)
     timeline = {}
     for yaml_file in yaml_files:
+        date_path, _ = splitext(yaml_file)
         file_dict = {
             'file_name': yaml_file,
-            'link_to_post': "/post?date=" + yaml_file,
+            'link_to_post': "/post/" + date_path,
         }
         # collect datetime info
         datetime_list = re.split('_|\.', yaml_file)
@@ -73,6 +74,10 @@ def load_post_data(yaml_files, timeline = {}):
             post_data = yaml.safe_load(file)
 
         # perform pre-processing
+        date_link, _ = splitext(yaml_file)
+        post_data["link"] = url_for("post", date=date_link)
+        date_elems = date_link.split('_')
+        post_data["date"] = f"{date_elems[1]}/{date_elems[2]}/{date_elems[0]}"
         if post_data.get('body'):
             for body in post_data['body']:
                 # parse and preload code snippet files
@@ -105,9 +110,9 @@ def home():
     post_array = load_post_data(yaml_files, timeline=timeline)
     return render_template('blog.html.j2', post_array=post_array, date_dict=timeline)
 
-@app.route("/post", methods=['GET'])
-def post():
-    req_post = request.args.get('date')
+@app.route("/post/<date>", methods=['GET'])
+def post(date: str):
+    req_post = date + '.yaml'
     if req_post:
         yaml_files, timeline = get_posts()
         if req_post in yaml_files:
