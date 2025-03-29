@@ -88,10 +88,11 @@ def load_post_data(yaml_files, timeline = {}):
                         body['code']['content'] = code_snippet
                 if body.get('text'):
                     body['text'] = parse_hyperlinks(body['text'])
+                    body['text'] = parse_bold(body['text'])
         post_array.append(post_data)
     return post_array
 
-def parse_hyperlinks(paragraph: str)-> str:
+def parse_hyperlinks(paragraph: str) -> str:
     markdown_link_re = re.compile(r'\[[^\[\]]*\]\([^\(\)]*\)')
     text_re = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
     link_re = re.compile(r'(?<=\()[^\(\)]*(?=\))')
@@ -102,6 +103,17 @@ def parse_hyperlinks(paragraph: str)-> str:
         link = link_re.search(hyperlink_match).group()
         new_hyperlink = f"<a href=\"{link}\">{text}</a>"
         paragraph = paragraph.replace(hyperlink_match, new_hyperlink)
+    return paragraph
+
+def parse_bold(paragraph: str) -> str:
+    bold_re = re.compile(r'(\*\*).*(\*\*)')
+    bold_text_re = re.compile(r'(?<=\*\*).*(?=\*\*)')
+    all_bold_text = bold_re.finditer(paragraph)
+    for bold_match in all_bold_text:
+        bold_match_text = bold_match.group()
+        text = re.search(bold_text_re, bold_match_text).group()
+        new_text = f"<b>{text}</b>"
+        paragraph = paragraph.replace(bold_match_text, new_text)
     return paragraph
 
 @app.route("/", methods=['GET'])
