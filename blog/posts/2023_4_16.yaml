@@ -1,0 +1,43 @@
+title: "Breaking out of the Lenovo Smart Clock"
+body:
+  - section_title: Background
+    text: This spring I stumbled across an interesting thread over at the [XDA Forums](https://xdaforums.com/t/guide-installing-android-apps-on-the-lenovo-smart-clock-2.4393271/) 
+      where @willbilec found that the [Lenovo Smart Clock 2](https://www.lenovo.com/us/en/p/smart-devices/smart-home/smart-home-series/smart-clock-gen-2/wmd00000485) could 
+      could be broken out of its custom Android interface, and be used to run any Android application.
+  - text: He documented a method where usage of the "[Talkback](https://support.google.com/googlenest/answer/6270190)" accessibility feature could be used to access a basic 
+      Android browser, at which point one could download, install, and run any APK of your choice.
+  - section_title: Getting Started
+    text: I picked up one of these 2nd gen clocks on eBay after reading about the possibility for customization, but some folks had already mentioned the Talkback 
+      support was removed from the Google Home app preventing the previously used method to break out of the Google Home software.
+  - text: After many different attempts amount of effort, I was able to find an alterative breakout method, detailed below, that follows the basic idea of the original method.
+  
+  - section_title: Digging In
+    text: "We start with following a couple menus within settings:"
+  - text: "`Settings menu -> Send Feedback —> (Say Something) -> Legal Help Page`"
+  - text: "This opens a locked down browser that we need to break out of still since it can't download anything."
+  
+  - text: My goal at this point was to find any link that used http. This is since the locked down browser that opens refuses to appear navigate through 
+      to a site with a cert error.
+  - text: I was able to navigate from this Legal site to [Lumen](https://lumendatabase.org/), where one of their blog posts 
+      [from 1/26/2023](https://lumendatabase.org/blog_entries/dmca-abuse-part-3-an-oligarchs-success) used a HTTP link.
+  - image: lumen-database-http-link.png
+
+  - text: I setup an A record in my home DNS for this website, and pointed it a self-hosted webserver that hosted a single page, with a plain text link to 
+      [FDroid](https://f-droid.org/), a website with Open Source apps available for download as APKs.
+  - image: fdroid-link-webserver.png
+    
+  - text: While it might seem untuitive to have this be plain-text, we need to exploit another feature.
+  - text: Pressing and holding to highlight the full URL presents an “Open” option in the context menu. Once clicked, nothing will appear to happen, 
+      but closing the locked-down browser window and quitting out of the settings menu reveals a **full** browser awaiting you. From here its trivial to 
+      download packages from F-Droid to start customizing the smart clock.
+
+  - text: Once you can install an APK, you should install an on-screen keyboard, a priority since the smart clock doesn't have one by default. 
+      I got started with installing [Unexpected Keyboard](https://f-droid.org/en/packages/juloo.keyboard2/) and [Text Launcher](https://f-droid.org/en/packages/ademar.textlauncher/) 
+      to provide some basic interface options. [At the recommendation of @j.smith](https://xdaforums.com/t/guide-installing-android-apps-on-the-lenovo-smart-clock-2.4393271/page-4#post-88227297) 
+      I also installed [Key Mapper](https://f-droid.org/en/packages/io.github.sds100.keymapper.inputmethod.latin/), which allows for remapping the "bump" input 
+      that the smart clock has, normally meant to snooze alarms.
+
+  - section_title: Wrap Up
+    text: I'm sure there is a more reliable method for this method, and I won't be surprised if Lenovo/Google is watching our thread over on XDA and patching 
+      these breakouts. There is also always the option of opening up the device and connecting with ADB, which 
+      [ThomasPrior over on GitHub](https://github.com/ThomasPrior/LenovoSmartClock2) has a great guide for.
