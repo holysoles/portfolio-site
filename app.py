@@ -1,8 +1,6 @@
-import re
-from os import listdir, getenv
-from os.path import join, splitext
+from os import getenv
 import base64
-import yaml
+import src.posts as posts
 from flask import Flask, request, Response, render_template, url_for
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_minify import minify
@@ -23,6 +21,8 @@ CONTACT_INFO = [
     },
 ]
 
+TAGS = posts.get_tags()
+
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 minify(app=app, html=True, js=True, cssless=True, static=True)
@@ -32,105 +32,36 @@ app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
-posts_dir = './blog/posts/'
-code_snippet_path = './blog/code_snippets/'
-
-def get_posts():
-    dir_files = listdir(posts_dir)
-    yaml_files = [file for file in dir_files if splitext(file)[1] == '.yaml']
-    yaml_files.sort(reverse=True)
-    timeline = {}
-    for yaml_file in yaml_files:
-        date_path, _ = splitext(yaml_file)
-        file_dict = {
-            'file_name': yaml_file,
-            'link_to_post': "/post/" + date_path,
-        }
-        # collect datetime info
-        datetime_list = re.split('_|\.', yaml_file)
-        file_year = int(datetime_list[0])
-        file_month = int(datetime_list[1])
-        file_day = int(datetime_list[2])
-        if file_year in timeline:
-            if file_month in timeline[file_year]:
-                timeline[file_year][file_month][file_day] = file_dict
-            else:
-                timeline[file_year][file_month] = {file_day: file_dict}
-        else:
-            timeline[file_year] = {file_month: {file_day: file_dict}}
-    return yaml_files, timeline
-
-def load_post_data(yaml_files, timeline = {}):
-    post_array = []
-    if timeline:
-        yaml_files = []
-        for year in sorted(timeline, reverse=True):
-            for month in sorted(timeline[year], reverse=True):
-                for day in sorted(timeline[year][month]):
-                    yaml_files.append(timeline[year][month][day]['file_name'])
-    for yaml_file in yaml_files:
-        # load in post text
-        with open(join(posts_dir, yaml_file), 'r') as file:
-            post_data = yaml.safe_load(file)
-
-        # perform pre-processing
-        date_link, _ = splitext(yaml_file)
-        post_data["link"] = url_for("post", date=date_link)
-        date_elems = date_link.split('_')
-        post_data["date"] = f"{date_elems[1]}/{date_elems[2]}/{date_elems[0]}"
-        if post_data.get('body'):
-            for body in post_data['body']:
-                # parse and preload code snippet files
-                if body.get('code'):
-                    with open(join(code_snippet_path, body['code']['file_name']), 'r') as file:
-                        code_snippet = file.read()
-                        body['code']['type'] = splitext(body['code']['file_name'])[1].replace('.', '')
-                        body['code']['content'] = code_snippet
-                if body.get('text'):
-                    body['text'] = parse_hyperlinks(body['text'])
-                    body['text'] = parse_bold(body['text'])
-        post_array.append(post_data)
-    return post_array
-
-def parse_hyperlinks(paragraph: str) -> str:
-    markdown_link_re = re.compile(r'\[[^\[\]]*\]\([^\(\)]*\)')
-    text_re = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
-    link_re = re.compile(r'(?<=\()[^\(\)]*(?=\))')
-    all_hyperlinks = markdown_link_re.finditer(paragraph)
-    for hyperlink in all_hyperlinks:
-        hyperlink_match = hyperlink.group()
-        text = text_re.search(hyperlink_match).group()
-        link = link_re.search(hyperlink_match).group()
-        new_hyperlink = f"<a href=\"{link}\">{text}</a>"
-        paragraph = paragraph.replace(hyperlink_match, new_hyperlink)
-    return paragraph
-
-def parse_bold(paragraph: str) -> str:
-    bold_re = re.compile(r'(\*\*).*(\*\*)')
-    bold_text_re = re.compile(r'(?<=\*\*).*(?=\*\*)')
-    all_bold_text = bold_re.finditer(paragraph)
-    for bold_match in all_bold_text:
-        bold_match_text = bold_match.group()
-        text = re.search(bold_text_re, bold_match_text).group()
-        new_text = f"<b>{text}</b>"
-        paragraph = paragraph.replace(bold_match_text, new_text)
-    return paragraph
-
-@app.route("/", methods=['GET'])
+@app.get("/")
 def home():
-    yaml_files, timeline = get_posts()
-    post_array = load_post_data(yaml_files, timeline=timeline)
-    return render_template('blog.html.j2', post_array=post_array, date_dict=timeline)
+    return post()
 
-@app.route("/post/<date>", methods=['GET'])
-def post(date: str):
-    req_post = date + '.yaml'
-    if req_post:
-        yaml_files, timeline = get_posts()
-        if req_post in yaml_files:
-            post = load_post_data([req_post])
-            return render_template('blog.html.j2', post_array=post, date_dict=timeline)
-    return "Post not found", 404
+@app.get("/blog/post/<date>")
+@app.get("/blog")
+def post(date: str = None, year: str = None, tag: str = None):
+    if not year:
+        year = request.args.get('year')
+    if not tag:
+        tag = request.args.get('tag')
+
+    yaml_files, timeline = posts.get_posts()
+
+    if date is not None:
+        req_post = date + '.yaml'
+        if req_post not in yaml_files:
+            return "Post not found", 404
+        post_array = posts.load_post_data(yaml_files=[req_post])
+    else:
+        # process years before loading post data since we can just search filenames
+        if year:
+            yaml_files = [file for file in yaml_files if file.split('_')[0] == year]
+        post_array = posts.load_post_data(yaml_files=yaml_files)
+        # process tag filtering now that we have post data
+        if tag:
+            post_array = [post for post in post_array if tag in post.get('tags', [])]
+
+    # TODO split out preprocessing from loading base YAMLs for speedup
+    return render_template('blog.html.j2', post_array=post_array, date_dict=timeline, tags=TAGS)
 
 def encode_contact_info(contact_info):
     encode_type = "utf-8"
@@ -161,7 +92,7 @@ def sitemap():
             url = url_for(rule.endpoint, **(rule.defaults or {}))
             static_pages.append(url)
 
-    _, timeline = get_posts()
+    _, timeline = posts.get_posts()
     xml = render_template('sitemap.xml.j2', host_url=request.host_url[:-1], static_pages=static_pages, blog_posts=timeline, default_last_mod=DEFAULT_LAST_MOD)
     r = Response(response=xml, status=200, mimetype="application/xml")
     r.headers["Content-Type"] = "text/xml; charset=utf-8"

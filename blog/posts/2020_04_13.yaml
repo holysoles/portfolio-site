@@ -1,5 +1,6 @@
 title: "Donating CPU Cycles to Fight COVID-19! "
-date: "4/13/2020"
+tags:
+  - misc
 body:
   - text: "Reading the title of this post might be a bit confusing, so let me start from the beginning. I was browsing Youtube this weekend when I saw [ETAPRIME](https://www.youtube.com/@ETAPRIME/), who does Raspberry Pi and other SBC Computer projects, made a video with a similar title. I watched his video and learned about a program called BOINC, the Berkely Open Infrastructure for Network Computing. This program allows multiple computers to be given a distributed workload for solving complex problems, effectively acting as a supercomputer."
   - text: "There are various projects that are run through the infrastructure, but one in particular, called [Rosetta@home](https://boinc.bakerlab.org/), is run by The Baker Lab at the University of Washing, which is dedicated to understanding the complex structure and function of proteins. They have turned their attention to SARS-COV2 virus and recently were given extra help to allow their software to run on ARM based computers."

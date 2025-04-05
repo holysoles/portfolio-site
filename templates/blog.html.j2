@@ -5,24 +5,31 @@
     <div class="sidebar-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                Blog Posts
+                Archive
             </div>
             <div class="sidebar-body">
                 <ol>
                     {% for year in date_dict %}
-                        <li class="sidebar-section"> {{ year }} </li>
-                        {% for month in date_dict[year]|sort(reverse=True) %}
-                            {% for day in date_dict[year][month]|sort %}
-                            <li>
-                                <a href="{{ date_dict[year][month][day]['link_to_post'] }}">
-                                    {{ month }}/{{ day }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        {% endfor %}
+                        <li class="sidebar-section"> 
+                            <a href="{{ url_for("post", year=year) }}"> {{ year }} <a/>
+                        </li>
                     {% endfor %}
                 </ol>
             </div>
+            <div class="sidebar-header">
+                Topics
+            </div>
+            <div class="sidebar-body">
+                <ol>
+                    {% for tag in tags %}
+                        <li class="sidebar-section"> 
+                            <a href="{{ url_for("post", tag=tag) }}"> {{ tag }} <a/>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+
         </aside>
     </div>
     <div class="posts">

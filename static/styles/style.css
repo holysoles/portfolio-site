@@ -187,6 +187,12 @@ a:visited {
   color: var(--white-text);
   font-weight: bold;
 }
+.navbar .options {
+  position: absolute;
+  right: 0;
+  top: 50px;
+}
+
 .options {
   margin-left: auto;
 }
@@ -278,10 +284,14 @@ code {
   box-shadow: var(--box-shadow)
 }
 
-.sidebar-section {
+.sidebar-header {
   font-weight: bold;
-  color: var(--main-text);
   padding: 8px;
+}
+
+.sidebar-section {
+  color: var(--main-text);
+  line-height: 1.2;
 }
 
 .sidebar a {

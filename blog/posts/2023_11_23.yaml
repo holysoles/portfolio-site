@@ -1,5 +1,7 @@
 title: "Highly Available DNS for Home Network"
-date: "11/23/2023"
+tags:
+  - networking
+  - dns
 body:
   - section_title:
     text: "A recent project I worked on was improving the fault tolerance of my home network, specifically DNS. Previously, I was running a single instance of 

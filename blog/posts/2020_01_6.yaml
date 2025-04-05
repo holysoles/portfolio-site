@@ -1,5 +1,7 @@
 title: "Arduino Heater Controller"
-date: "1/6/2020"
+tags:
+  - hardware
+  - highlights
 body: 
   - text: "Since the cold has rolled in the past weeks, I've been running the space heater in my bedroom, but the heater's temperature control is horrible. It consistently overheats and underheats the set temperature, which I would assume either comes from a cheap temperature sensor or the fact the sensor is located directly next to the heating element, so I finally decided to do something about it."
   - section_title: "The Plan"

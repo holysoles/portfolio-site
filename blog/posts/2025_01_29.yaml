@@ -1,5 +1,7 @@
 title: "Streaming Live TV with Plex and HDHomeRun inside Kubernetes"
-date: "1/29/2025"
+tags:
+  - k8s
+  - networking
 body:
   - section_title: "Background"
     text: "[HDHomeRuns](https://www.silicondust.com/hdhomerun/) are a great way to stream live TV to your home. These are devices produced by Silicon Dust that connect to an OTA antenna (or cable box) and can be connected to clients via USB or Ethernet. 

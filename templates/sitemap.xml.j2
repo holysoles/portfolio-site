@@ -13,7 +13,7 @@
       {%- for month in blog_posts[year]|sort(reverse=True) -%}
          {%- for day in blog_posts[year][month]|sort -%}
    <url>
-      <loc>{{ host_url + blog_posts[year][month][day]['link_to_post'] }}</loc>
+      <loc>{{ url_for("post", date=(year|string + '_' + month|string + '_' + day|string)) }}</loc>
       <lastmod>{{ year }}-{{ '%02d' % month }}-{{ '%02d' % day }}</lastmod>
    </url>
          {%- endfor -%}

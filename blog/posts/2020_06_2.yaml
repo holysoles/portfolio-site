@@ -1,5 +1,7 @@
 title: "Crowdsourced Drink Prices: Web App using ReactJS"
-date: "6/2/2020"
+tags:
+  - javascript
+  - highlights
 body:
   - text: "My latest project came about when out the other night with some friends. We were at a bar that was crowded, and I wanted to order a cocktail, but some bars have ridiculously high prices for certain drinks, so I was hesitant. Bars rarely post their prices for each drink, especially cocktails. I came up with the idea of building an app to crowdsource drink prices for any bar, inspired by other crowdsourced apps like Waze and GasBuddy. The \"Drink Up, Pay Less\" App (DU-PL) was born."
   - section_title: "Front End:"

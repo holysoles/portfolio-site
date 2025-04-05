@@ -1,5 +1,6 @@
 title: "Configuring a Hub-Spoke VPN with WireGuard"
-date: "5/13/2022"
+tags:
+  - networking
 body:
   - text: "When I recently moved, I unfortunately found that my ISP used double-NAT for their customers. This meant for services I run on my home network that don't support IPv6, such as Plex, or my file share, I was unable to access them externally. To address this, I identified that a hub-spoke VPN configuration would allow me to access my home network when on the go. I choose [WireGuard](https://www.wireguard.com/) as the VPN protocol for a multitude of reasons: it is highly efficient compared to older protocols like OpenVPN or IPSec, is natively included in the Linux Kernel starting with version 5.6, and is configurable via a typical network interface."
   - text: "By utilizing a server that is publicly accessible​, you can route bi-directional traffic from a client not on-prem, into your home network:"

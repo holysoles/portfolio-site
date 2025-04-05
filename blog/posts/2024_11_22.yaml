@@ -1,5 +1,6 @@
 title: "Using a Transparent Proxy to bypass TLS Fingerprinting"
-date: "11/22/2024"
+tags:
+   - security
 body:
   - section_title: "Background"
   - text: "As an avid user of Home Assistant, I was excited years ago when I found there was an integration to
