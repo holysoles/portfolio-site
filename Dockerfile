@@ -8,6 +8,7 @@ WORKDIR /app
 COPY static/ ./static/
 COPY templates/ ./templates/
 COPY blog/ ./blog/
+COPY src/ ./src/
 COPY app.py requirements.txt  ./
 
 # Upgrade pip and install Python dependencies
