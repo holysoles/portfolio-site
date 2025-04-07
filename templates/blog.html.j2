@@ -37,7 +37,9 @@
         <article>
             {% if post['title'] %}
                 <h2>
-                    <a href={{ post['link'] }} >
+                    {% set date_arr = post['date'].split('/') %}
+                    {% set date_str = date_arr[2] +"_"+ date_arr[0] +"_"+ date_arr[1] %}
+                    <a href={{ url_for("post", date=date_str) }} >
                         {{ post['title'] }}
                     </a>
                 </h2>
