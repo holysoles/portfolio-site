@@ -59,6 +59,20 @@
                         {{ paragraph['text'] | safe }}
                     </p>
                 {% endif %}
+                {% if paragraph['list'] %}
+                    <ul class="article-list">
+                    {% for list_item in paragraph['list'] %}
+                        <li>{{ list_item }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if paragraph['sequence'] %}
+                    <ol class="article-list">
+                    {% for list_item in paragraph['sequence'] %}
+                        <li>{{ list_item }}</li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
                 {% if paragraph['code'] %}
                     {% set code_id = unique_id() %}
                     <div class="code-container" id="{{ code_id }}">

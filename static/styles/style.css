@@ -209,6 +209,10 @@ a:visited {
   content: var(--dark-mode-icon)
 }
 
+.article-list {
+  padding-left: 25px;
+}
+
 /* Style for code syntax */
 .code-container {
   background-color: var(--bgnd-color);

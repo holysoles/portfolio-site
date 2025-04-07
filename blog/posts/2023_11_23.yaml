@@ -5,26 +5,27 @@ tags:
 body:
   - section_title:
     text: "A recent project I worked on was improving the fault tolerance of my home network, specifically DNS. Previously, I was running a single instance of 
-    [Pi-hole](https://pi-hole.net/), which filters out unwanted DNS queries, and forwarded the rest to my upstream Windows Domain Controllers with integrated DNS. From there, queries go 
-    out to a public resolver. This approach had a few drawbacks. Two issue stemmed from that the Pi-hole instance was running bare-metal on a Raspberry Pi, which 
-    while usually reliable, was not tolerant of hardware issues. Patching the Raspberry Pi or rebooting it for other reasons would also cause a DNS service outage,
-     which was undesirable. The Raspberry Pi was also being used for other services which occasionally could introduce undesirable system load. Another issue I 
-     could often encounter, if the upstream Windows DNS servers stopped responding to queries, Pi-hole cached these failed lookups, which would persist even after 
-     the issue with the upstream Windows servers was resolved and required a service restart. The solution I designed is pictured below. DNS queries are now sent 
-     to a single IP address (192.168.1.2), provided via DHCP, which is a load balanced IP address on my ADC (now NetScaler again) VPX appliance, pointed at two 
-     Pi-hole instances."
+      [Pi-hole](https://pi-hole.net/), which filters out unwanted DNS queries, and forwarded the rest to my upstream Windows Domain Controllers with integrated DNS. From there, queries go 
+      out to a public resolver. This approach had a few drawbacks. Two issue stemmed from that the Pi-hole instance was running bare-metal on a Raspberry Pi, which 
+      while usually reliable, was not tolerant of hardware issues. Patching the Raspberry Pi or rebooting it for other reasons would also cause a DNS service outage,
+      which was undesirable. The Raspberry Pi was also being used for other services which occasionally could introduce undesirable system load. Another issue I 
+      could often encounter, if the upstream Windows DNS servers stopped responding to queries, Pi-hole cached these failed lookups, which would persist even after 
+      the issue with the upstream Windows servers was resolved and required a service restart. The solution I designed is pictured below. DNS queries are now sent 
+      to a single IP address (192.168.1.2), provided via DHCP, which is a load balanced IP address on my ADC (now NetScaler again) VPX appliance, pointed at two 
+      Pi-hole instances."
     image: "DNS_diagram.png"
   - section_title: "NetScaler Configuration"
     text: "Getting a NetScaler instance up and running is actually pretty easy, since as of v12.1, Citrix offers a [Freemium licensing option](https://docs.netscaler.com/en-us/citrix-adc/current-release/licensing.html), which is bandwidth 
-    restricted to 20 Mbps and doesn't provide access to certain features like GSLB or Citrix Gateway, but neither limitation is an issue for this use case. 
-    Configuring a simple load balancer for servers on a NetScaler isn't particularly difficult and many general guides exist. At a high level, you need to:"
-  - text: "- Define the servers that will provide the DNS service."
-  - text: "- Define a Load Balancing Service Group containing those servers."
-  - text: "- Define a Load Balancing Virtual Server, with a Virtual IP listening at the IP address you'll be pointing clients to, and bind the above Service Group."
+      restricted to 20 Mbps and doesn't provide access to certain features like GSLB or Citrix Gateway, but neither limitation is an issue for this use case. 
+      Configuring a simple load balancer for servers on a NetScaler isn't particularly difficult and many general guides exist. At a high level, you need to:"
+    list:
+    - Define the servers that will provide the DNS service.
+    - Define a Load Balancing Service Group containing those servers.
+    - Define a Load Balancing Virtual Server, with a Virtual IP listening at the IP address you'll be pointing clients to, and bind the above Service Group.
   - text: "Additionally, you can bind a monitor for the Service Group to ensure DNS lookups function properly, rather than servers just responding to pings or 
-  other simple health checks. I configured a DNS monitor with the parameters shown on the right, specifically to query for my local domain name, and ensure it 
-  resolves to one of the IP addresses of my domain controllers. Multiple IP addresses can be added to the list to be considered a valid response. Don't forget 
-  to save your changes since they won't persist through reboot otherwise!"
+      other simple health checks. I configured a DNS monitor with the parameters shown on the right, specifically to query for my local domain name, and ensure it 
+      resolves to one of the IP addresses of my domain controllers. Multiple IP addresses can be added to the list to be considered a valid response. Don't forget 
+      to save your changes since they won't persist through reboot otherwise!"
     image: "netscaler_healthcheck.png"
   - section_title: "Pi-hole Container Setup"
     text: "The upstream Pi-hole instances are configured with Docker Compose, deployed as containers on a Docker Swarm cluster, and managed via Portainer.
@@ -45,16 +46,18 @@ body:
     code:
       file_name: "pihole_compose.yaml"
   - section_title: "Takeaways"
-    text: "Advantages:"
-  - text: "- A single IP to point to for DNS queries reduces network complexity"
-  - text: "- When defining two DNS servers for clients, clients only fail over to the secondary one if the first is unavailable. This allows DNS queries to be 
-      consistently balanced between both Pi-Hole nodes and reduce system load."
-  - text: "- The custom DNS monitor ensures my upstream Windows servers are answering domain queries with healthy responses."
-  - text: "- Pi-hole containers defined via YAML increases flexibility to deploy additional nodes if needed."
-  - text: "Disadvantages:"
-  - text: "- The primary disadvantage of this setup is a single point of failure remains, with the NetScaler node being the listening IP for DNS queries. I found 
-      this risk to be tolerable though since I dont use my NetScaler VPX for other purposes, and its significantly more stable by comparison to the DNS servers 
-      themselves."
-  - text: ""
+    text: "**Advantages:**"
+    list:
+      - A single IP to point to for DNS queries reduces network complexity"
+      - When defining two DNS servers for clients, clients only fail over to the secondary one if the first is unavailable. This allows DNS queries to be 
+        consistently balanced between both Pi-Hole nodes and reduce system load."
+      - The custom DNS monitor ensures my upstream Windows servers are answering domain queries with healthy responses."
+      - Pi-hole containers defined via YAML increases flexibility to deploy additional nodes if needed."
+  - text: "**Disadvantages:**"
+    list:
+      - The primary disadvantage of this setup is a single point of failure remains, with the NetScaler node being the listening IP for DNS queries. I found 
+        this risk to be tolerable though since I dont use my NetScaler VPX for other purposes, and its significantly more stable by comparison to the DNS servers 
+        themselves."
+  - text: " "
   - text: "In the future, I'd like to further investigate maintaining between synchronicity between the Pi-Hole docker nodes. I plan to do this with either the 
       handy gravity-sync tool by vmstan, and/or by using shared storage for the volumes being used by the docker nodes."

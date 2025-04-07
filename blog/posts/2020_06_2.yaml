@@ -5,19 +5,21 @@ tags:
 body:
   - text: "My latest project came about when out the other night with some friends. We were at a bar that was crowded, and I wanted to order a cocktail, but some bars have ridiculously high prices for certain drinks, so I was hesitant. Bars rarely post their prices for each drink, especially cocktails. I came up with the idea of building an app to crowdsource drink prices for any bar, inspired by other crowdsourced apps like Waze and GasBuddy. The \"Drink Up, Pay Less\" App (DU-PL) was born."
   - section_title: "Front End:"
-  - text: "- React app written with JS ES6, HTML5, and CSS"
-  - text: "- Makes asynchronous requests to back end server, receives JSON data back"
-  - text: "- Hosted on AWS Amplify"
+    list:
+    - React app written with JS ES6, HTML5, and CSS
+    - Makes asynchronous requests to back end server, receives JSON data back
+    - Hosted on AWS Amplify
   - section_title: "Back End Server (RESTful Web API):"
-  - text: "- Nginx server acts as a reverse proxy to redirect traffic to a Node.js server"
-  - text: "Node.js Server interfaces with MariaDB to retrieve data"
-  - text: "MariaDB holds a database with a unique table for each bar"
-  - text: "Hosted on Amazon EC2 (Elastic Compute Cloud)"
+    list:
+      - Nginx server acts as a reverse proxy to redirect traffic to a Node.js server
+      - Node.js Server interfaces with MariaDB to retrieve data
+      - MariaDB holds a database with a unique table for each bar
+      - Hosted on Amazon EC2 (Elastic Compute Cloud)
   - section_title: "Front End Detail:"
     text: "I had a solid foundation in JavaScript going into this project, but had never worked with UI libraries like React or Angular. I chose React due to its rising popularity over recent years, especially for building PWAs (Progressive Web Apps). I decided to build a web app instead of a native Android or iOS app due to the fees required to join their app store developer programs. Progressive Web Apps are growing in support, allowing the webpage to be installable to a user's home screen, caches content for faster load times, and has offline functionality for features that don't directly require internet access."
   - section_title: "Back End Detail:"
     text: "The internet facing server which receives HTTPS requests runs on Nginx which forwards requests to an Express (a NodeJS framework for web applications) server. This is done so that Node is not run as a superuser, which has security vulnerabilities. I generated a SSL certificate (CA signed) so that the front-end app running on HTTPS was able to send requests to the server. I used MariaDB (a branch of MySQL) for the relational database to store data submitted by users for venues and drinks. Tables are generated on the fly if they do not exist for a specific venue, so that the app is easily expandable for a multi-regional user base. Initially I tried hosting the server myself, but ran into problems with my ISP blocking requests to ports 80 and 443, even though they claim not to. I ported it all to Amazon's EC2 service which allows for scalable operations, and allows some extra security in my home network by not hosting it myself."
   - section_title: "Finished Project:"
-  - text: "The app is currently live at: du-pl.com . Please check it out and feel free to leave feedback! I found the process very enjoyable and am happy I was able to add to my JavaScript development skills, as well as getting valuable experience using popular libraries and frameworks like React, Node.js, Nginx, and MariaDB."
+  - text: "The app is currently live at: [du-pl.com](https://www.du-pl.com). Please check it out and feel free to leave feedback! I found the process very enjoyable and am happy I was able to add to my JavaScript development skills, as well as getting valuable experience using popular libraries and frameworks like React, Node.js, Nginx, and MariaDB."
   - section_title: "Future Plans:"
   - text: "Moving forward I plan to continue to add more features to the site, like user accounts to favorite/bookmark venues, and the ability to search local venues for specific drinks. Ideally in the future I would port the app to React-Native, which would give me the ability to compile the app for XCode and Android formats. I would then host them on the iOS App Store and Google Play Store, as users would prefer a native app to a web app, as updates can be pushed automatically and the app can be found easier by new users."
