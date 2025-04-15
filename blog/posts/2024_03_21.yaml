@@ -5,37 +5,37 @@ tags:
 body:
   - section_title: "Overview"
     text: "I wanted to share my recent journey of containerizing two of my projects, a [Flask](https://flask.palletsprojects.com/en/stable/) 
-    app ([this website](https://github.com/holysoles/portfolio-site)) and a Go web app ([ginrcon](https://github.com/holysoles/ginrcon)),
-     and then building a CI/CD pipeline to automate building and publishing the Docker image. Let's dive in!"
+      app ([this website](https://github.com/holysoles/portfolio-site)) and a Go web app ([ginrcon](https://github.com/holysoles/ginrcon)), 
+      and then building a CI/CD pipeline to automate building and publishing the Docker image. Let's dive in!"
   - section_title: "The Motivation Behind Containerization"
-    text: "As the deployment complexity of my projects grew, I found managing VMs, dependencies, scaling, and patching to be increasingly
-     challenging. I've been consuming and deploying Docker containers for awhile for various services at home, such as Pi-hole, a [Unifi network server](https://help.ui.com/hc/en-us/articles/360012282453-Self-Hosting-a-UniFi-Network-Server),
-      a [Matrix](https://matrix.org/) stack, and more. I've seen the advantages of containers as an administrator, so from the development perspective, I knew
-       containers promised consistency across different environments, simplified deployments, and enhanced scalability."
+    text: "As the deployment complexity of my projects grew, I found managing VMs, dependencies, scaling, and patching to be increasingly 
+      challenging. I've been consuming and deploying Docker containers for awhile for various services at home, such as Pi-hole, a [Unifi network server](https://help.ui.com/hc/en-us/articles/360012282453-Self-Hosting-a-UniFi-Network-Server), 
+      a [Matrix](https://matrix.org/) stack, and more. I've seen the advantages of containers as an administrator, so from the development perspective, I knew 
+      containers promised consistency across different environments, simplified deployments, and enhanced scalability."
   - section_title: "Flask App Containerization"
-    text: "I started by creating a Dockerfile for my Flask app. This involved specifying a base image, copying my app's code into the
-     container, installing dependencies, and exposing the necessary ports. Since I had already written a Linux service unit file, I stuck
+    text: "I started by creating a Dockerfile for my Flask app. This involved specifying a base image, copying my app's code into the 
+      container, installing dependencies, and exposing the necessary ports. Since I had already written a Linux service unit file, I stuck 
       with running the Flask app with [Gunicorn](https://gunicorn.org/)."
-  - text: "To ensure the web app would also run highly-available, I planned on deploying it in a replicated fashion, so I utilized Docker
-   Compose for my Swarm. This allowed me to define the replication definition in a simple YAML file, alongside the image spec."
+  - text: "To ensure the web app would also run highly-available, I planned on deploying it in a replicated fashion, so I utilized Docker 
+      Compose for my Swarm. This allowed me to define the replication definition in a simple YAML file, alongside the image spec."
   - section_title: "Go App Containerization"
-    text: "One of the perks of Go is its ability to compile to a single binary. Leveraging this, I created a Dockerfile for my Go app,
-     ensuring it downloaded dependencies and compiled within the build container, on a pinned Go version, for consistency."
-  - text: "Since Go compiles to a binary, my Dockerfile for the Go app focused on creating a minimalistic image, resulting in faster
-   builds and smaller image sizes. This is why I chose to use Alpine Linux as the final image. This lead to me using a multi-staged
-    build to accomplish all intended goals."
+    text: "One of the perks of Go is its ability to compile to a single binary. Leveraging this, I created a Dockerfile for my Go app, 
+      ensuring it downloaded dependencies and compiled within the build container, on a pinned Go version, for consistency."
+  - text: "Since Go compiles to a binary, my Dockerfile for the Go app focused on creating a minimalistic image, resulting in faster 
+      builds and smaller image sizes. This is why I chose to use Alpine Linux as the final image. This lead to me using a multi-staged 
+      build to accomplish all intended goals."
   - section_title: "CI Pipeline"
     text: "After determining the needed image build and publishing workflows to ensure my image was available on the GitHub Container
-     Repository (GHCR), I figured setting up a CI pipeline to handle those steps for me automatically would further contribute to a
-     consistent image, in addition to being easier to manage. While I have much experience with GitLab CI professionally,
-     these projects were both already hosted on GitHub, so I chose to learn how to use GitHub Actions to run these pipelines."
+      Repository (GHCR), I figured setting up a CI pipeline to handle those steps for me automatically would further contribute to a 
+      consistent image, in addition to being easier to manage. While I have much experience with GitLab CI professionally, 
+      these projects were both already hosted on GitHub, so I chose to learn how to use GitHub Actions to run these pipelines."
   - text: "Leveraging GitHub Actions' flexibility, I wrote a workflow to build Docker images that works for both apps, triggered by
-   Releases on the project. Once the image is built successfully, another step in the workflow pushes these images to the associated
-    package repo (GHCR), with the version auto-detected based on the Release version."
+      Releases on the project. Once the image is built successfully, another step in the workflow pushes these images to the associated 
+      package repo (GHCR), with the version auto-detected based on the Release version."
   - section_title: "Conclusion"
-    text: "The migration of my Flask and Go web apps into containers, coupled with the establishment of a Docker image build and publish
-     pipeline, has improved my development and deployment workflows. Containerization has not only enhanced portability, scalability,
-      and availability, but also simplified the management of dependencies. With a reliable CI/CD pipeline in place, I'm better equipped
-       to iterate on my projects in the future."
-  - text: "For future improvements, after developing unit tests for these projects and have a seperate workflow run those on commit
-   automatically."
+    text: "The migration of my Flask and Go web apps into containers, coupled with the establishment of a Docker image build and publish 
+      pipeline, has improved my development and deployment workflows. Containerization has not only enhanced portability, scalability,
+      and availability, but also simplified the management of dependencies. With a reliable CI/CD pipeline in place, I'm better equipped 
+      to iterate on my projects in the future."
+  - text: "For future improvements, after developing unit tests for these projects and have a seperate workflow run those on commit 
+      automatically."

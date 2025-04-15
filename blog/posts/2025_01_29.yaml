@@ -9,8 +9,8 @@ body:
   - text: "In my case, I chose a Ethernet connected HDHomeRun, however this presented a challenge when running Plex inside Kubernetes. HDHomeRun connections are initiated by the client sending a UDP broadcast packet from port 65001. 
       This is done to discover the HDHomeRun device. Once the HDHomeRun device is discovered by the client, it will present it as a connection option, as demonstrated in [this official Plex guide](https://support.plex.tv/articles/225877347-live-tv-dvr/).
       While this can easily work within a given network, what if you run your IOT devices in one VLAN, but run Plex in another? Furthermore, what if you are running Plex inside Kubernetes, which uses NAT between the pod networks and the hosts?"
-  - section_title: "Solution"
-    text: "Thankfully this is where socat (link) can help us. Socat is a versatile utility for bidirectional data transfer between two independent data streams, supporting various protocols like TCP, UDP, pipes, and files.
+  - section_title: "Solving with socat"
+    text: "Thankfully this is where [socat](https://www.redhat.com/en/blog/getting-started-socat) can help us. Socat is a versatile utility for bidirectional data transfer between two independent data streams, supporting various protocols like TCP, UDP, pipes, and files.
       As [meckhert on the Unifi forum](https://community.ui.com/questions/Howto-HDHomerun-discovery-on-different-LAN-segment/97db52c6-4add-4ba1-ab0d-27ee6f43db8f) shared, socat can be used to handle the VLAN traversal. 
       In our case it can also handle the NATing issues from inside the Kubernetes cluster! By running socat in a sidecar container with Plex, it will be able to receive the broadcast packets Plex sends out, and forward them directly to the HDHomeRun device."
   - text: "An example deployment of this:"
