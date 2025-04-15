@@ -51,6 +51,7 @@ def load_post_data(yaml_files):
                 if body.get('text'):
                     body['text'] = parse_hyperlinks(body['text'])
                     body['text'] = parse_bold(body['text'])
+                    body['text'] = parse_code_inline(body['text'])
         post_array.append(post_data)
     return post_array
 
@@ -68,13 +69,24 @@ def parse_hyperlinks(paragraph: str) -> str:
     return paragraph
 
 def parse_bold(paragraph: str) -> str:
-    bold_re = re.compile(r'(\*\*).*(\*\*)')
-    bold_text_re = re.compile(r'(?<=\*\*).*(?=\*\*)')
+    bold_re = re.compile(r'(\*\*).+?(\*\*)')
+    bold_text_re = re.compile(r'(?<=\*\*).+?(?=\*\*)')
     all_bold_text = bold_re.finditer(paragraph)
     for bold_match in all_bold_text:
         bold_match_text = bold_match.group()
         text = re.search(bold_text_re, bold_match_text).group()
         new_text = f"<b>{text}</b>"
+        paragraph = paragraph.replace(bold_match_text, new_text)
+    return paragraph
+
+def parse_code_inline(paragraph: str) -> str:
+    bold_re = re.compile(r'(\`).+?(\`)')
+    bold_text_re = re.compile(r'(?<=\`).+?(?=\`)')
+    all_bold_text = bold_re.finditer(paragraph)
+    for bold_match in all_bold_text:
+        bold_match_text = bold_match.group()
+        text = re.search(bold_text_re, bold_match_text).group()
+        new_text = f"<code>{text}</code>"
         paragraph = paragraph.replace(bold_match_text, new_text)
     return paragraph
 
