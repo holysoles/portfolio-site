@@ -244,6 +244,7 @@ a:visited {
 }
 code {
   font-family: 'Courier New', monospace;
+  background-color: var(--bgnd-color);
   color: var(--main-text);
   flex-grow: 1; /* Allow code block to grow and take remaining space */
 }
