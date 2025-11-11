@@ -16,6 +16,7 @@ RUN pip3 install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 ENV PORT=5000
 ENV BUILD_DATE=$BUILD_DATE
-ENV GUNICORN_CMD_ARGS="--bind 0.0.0.0:${PORT} --workers 4"
+ENV WORKERS=1
+ENV GUNICORN_CMD_ARGS="--bind 0.0.0.0:${PORT} --workers ${WORKERS}"
 EXPOSE ${PORT}/tcp
 CMD ["gunicorn", "app:app"]
