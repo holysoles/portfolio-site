@@ -4,6 +4,7 @@ import src.posts as posts
 from flask import Flask, request, Response, render_template, url_for
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_minify import minify
+from flask_caching import Cache
 
 DEFAULT_LAST_MOD = getenv('BUILD_DATE')
 CONTACT_INFO = [
@@ -23,9 +24,14 @@ CONTACT_INFO = [
 
 TAGS = posts.get_tags()
 
+config = {
+    "CACHE_TYPE": "SimpleCache",
+}
 app = Flask(__name__, static_folder='static', static_url_path='')
+app.config.from_mapping(config)
 
 minify(app=app, html=True, js=True, cssless=True, static=True)
+cache = Cache(app)
 
 # Proxy setup
 app.wsgi_app = ProxyFix(
@@ -33,11 +39,13 @@ app.wsgi_app = ProxyFix(
 )
 
 @app.get("/")
+@cache.cached()
 def home():
     return post()
 
 @app.get("/blog/post/<date>")
 @app.get("/blog")
+@cache.cached()
 def post(date: str = None, year: str = None, tag: str = None):
     if not year:
         year = request.args.get('year')
@@ -72,10 +80,12 @@ def encode_contact_info(contact_info):
 
 encoded_contact_info = encode_contact_info(CONTACT_INFO)
 @app.route("/contact", methods=['GET'])
+@cache.cached()
 def contact():
     return render_template('contact.html.j2', contact_info=encoded_contact_info)
 
 @app.route("/projects", methods=["GET"])
+@cache.cached()
 def projects():
     return render_template('projects.html.j2')
 
@@ -85,6 +95,7 @@ def has_no_empty_params(rule):
     return len(defaults) >= len(arguments)
 
 @app.route("/sitemap.xml", methods=["GET"])
+@cache.cached()
 def sitemap():
     static_pages = []
     for rule in app.url_map.iter_rules():
