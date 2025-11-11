@@ -46,15 +46,15 @@ def home():
 @app.get("/blog/post/<date>")
 @app.get("/blog")
 @cache.cached()
-def post(date: str = None, year: str = None, tag: str = None):
+def post(date: str = "", year: str = "", tag: str = ""):
     if not year:
-        year = request.args.get('year')
+        year = request.args.get('year', "")
     if not tag:
-        tag = request.args.get('tag')
+        tag = request.args.get('tag', "")
 
     yaml_files, timeline = posts.get_posts()
 
-    if date is not None:
+    if not date:
         req_post = date + '.yaml'
         if req_post not in yaml_files:
             return "Post not found", 404
@@ -99,9 +99,10 @@ def has_no_empty_params(rule):
 def sitemap():
     static_pages = []
     for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            url = url_for(rule.endpoint, **(rule.defaults or {}))
-            static_pages.append(url)
+        if type(rule.methods) == set[str]:
+            if "GET" in rule.methods and has_no_empty_params(rule):
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                static_pages.append(url)
 
     _, timeline = posts.get_posts()
     xml = render_template('sitemap.xml.j2', host_url=request.host_url[:-1], static_pages=static_pages, blog_posts=timeline, default_last_mod=DEFAULT_LAST_MOD)
