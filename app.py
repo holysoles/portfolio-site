@@ -47,16 +47,15 @@ def home():
 
 @app.get("/blog/post/<date>")
 @app.get("/blog")
-@cache.cached()
-def post(date: str = "", year: str = "", tag: str = ""):
-    if not year:
-        year = request.args.get("year", "")
-    if not tag:
-        tag = request.args.get("tag", "")
+def post(date: str | None = None, year: str | None = None, tag: str | None = None):
+    if year is None:
+        year = request.args.get("year")
+    if tag is None:
+        tag = request.args.get("tag")
 
     yaml_files, timeline = posts.get_posts()
 
-    if not date:
+    if date is not None:
         req_post = date + ".yaml"
         if req_post not in yaml_files:
             return "Post not found", 404
