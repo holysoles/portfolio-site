@@ -1,4 +1,3 @@
-import base64
 from os import getenv
 
 from flask import Flask, Response, render_template, request, url_for
@@ -6,28 +5,46 @@ from flask_caching import Cache
 from flask_minify import minify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+import encode
 import src.posts as posts
 
 DEFAULT_LAST_MOD = getenv("BUILD_DATE")
+USE_CACHE = getenv("USE_CACHE", "false")
 CONTACT_INFO = [
     {
         "label": "Email",
         "icon": "email.svg",
-        "text": "patrickvevans@gmail.com",
         "href": "mailto:patrickvevans@gmail.com",
+        "mask": True,
     },
     {
         "label": "Matrix",
         "icon": "matrix.svg",
-        "text": "@holysoles:beeper.com",
         "href": "https://matrix.to/#/@holysoles:beeper.com",
+        "mask": True,
+    },
+    {
+        "label": "Linkedin",
+        "icon": "linkedin.svg",
+        "href": "https://www.linkedin.com/in/patrickvevans",
+        "mask": False,
+    },
+    {
+        "label": "Mastodon",
+        "icon": "mastodon.svg",
+        "href": "https://unifed.io/@pat",
+        "mask": False,
     },
 ]
+ENCODED_CONTACT_INFO = encode.contact_info(CONTACT_INFO)
 
 TAGS = posts.get_tags()
 
+cache_type = "NullCache"
+if USE_CACHE == "true":
+    cache_type = "SimpleCache"
 config = {
-    "CACHE_TYPE": "SimpleCache",
+    "CACHE_TYPE": cache_type,
 }
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.config.from_mapping(config)
@@ -71,35 +88,21 @@ def post(date: str | None = None, year: str | None = None, tag: str | None = Non
 
     # TODO split out preprocessing from loading base YAMLs for speedup
     return render_template(
-        "blog.html.j2", post_array=post_array, date_dict=timeline, tags=TAGS
+        "blog.html.j2",
+        post_array=post_array,
+        date_dict=timeline,
+        tags=TAGS,
+        contact_info=ENCODED_CONTACT_INFO,
     )
-
-
-def encode_contact_info(contact_info):
-    encode_type = "utf-8"
-    for dict in contact_info:
-        dict["href"] = base64.b64encode(dict["href"].encode(encode_type)).decode(
-            encode_type
-        )
-        dict["text"] = base64.b64encode(dict["text"].encode(encode_type)).decode(
-            encode_type
-        )
-    return contact_info
-
-
-encoded_contact_info = encode_contact_info(CONTACT_INFO)
-
-
-@app.route("/contact", methods=["GET"])
-@cache.cached()
-def contact():
-    return render_template("contact.html.j2", contact_info=encoded_contact_info)
 
 
 @app.route("/projects", methods=["GET"])
 @cache.cached()
 def projects():
-    return render_template("projects.html.j2")
+    return render_template(
+        "projects.html.j2",
+        contact_info=ENCODED_CONTACT_INFO,
+    )
 
 
 def has_no_empty_params(rule):

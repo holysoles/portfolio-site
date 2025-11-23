@@ -2,6 +2,9 @@ body {
   /* colors */
   --link-hover-color: #938dfe;
   --code-hover-color-border: #ffc000;
+  /* --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
+  --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
+  --ico-hover-color: brightness(0) saturate(100%) invert(56%) sepia(90%) saturate(563%) hue-rotate(205deg) brightness(93%) contrast(95%);
   --header-bgnd-color: #333;
   --white-text: #ffffff;
   --sidebar-bgnd-color: var(--article-bgnd-color);
@@ -14,7 +17,6 @@ body {
   --divider-color: #5555553b;
   --mobile-sidebar-bgnd-color: #333;
   --main-text: #333;
-  --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
   --article-text: #555;
   --code-hover-color: #ffe8b0;
   --dark-mode-icon: "☾";
@@ -33,7 +35,6 @@ body.alt-color-mode {
   --divider-color: #f5f5f5c9;
   --mobile-sidebar-bgnd-color: #5f5c59;
   --main-text: #f5f5f5;
-  --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
   --article-text: #f5f5f5c9;
   --code-hover-color: #ffe9b08a;
   --dark-mode-icon: "☀︎";
@@ -49,7 +50,6 @@ body.alt-color-mode {
     --divider-color: #f5f5f5c9;
     --mobile-sidebar-bgnd-color: #5f5c59;
     --main-text: #f5f5f5;
-    --ico-color: invert(84%) sepia(100%) saturate(0%) hue-rotate(170deg) brightness(109%) contrast(92%); /* equiv to #f5f5f5 */
     --article-text: #f5f5f5c9;
     --code-hover-color: #ffe9b08a;
     --dark-mode-icon: "☀︎";
@@ -63,7 +63,6 @@ body.alt-color-mode {
     --mobile-sidebar-bgnd-color: #e0e0e0;
     --divider-color: #5555553b;
     --main-text: #333;
-    --ico-color: invert(23%) sepia(0%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(112%); /* equiv to #333 */
     --article-text: #555;
     --code-hover-color: #ffe8b0;
     --dark-mode-icon: "☾";
@@ -152,8 +151,11 @@ a:visited {
 }
 
 /* Navigation styles */
+.title {
+  padding: 5px;
+}
 .navbar {
-  padding: 10px;
+  padding: 5px;
   list-style-type: none;
   display: flex;
   justify-content: space-between;
@@ -180,7 +182,7 @@ a:visited {
 }
 .nav-list li {
   display: inline-block;
-  margin-right: 15px;
+  margin-inline: 5px;
 }
 .nav-list a {
   text-decoration: none;
@@ -211,6 +213,21 @@ a:visited {
 
 .article-list {
   padding-left: 25px;
+}
+
+.contact-container {
+  padding: 5px;
+}
+.link-with-logo a {
+  padding: 5px;
+}
+.link-with-logo img {
+  width: 24px;
+  height: 24px;
+  filter: var(--ico-color);
+}
+.link-with-logo img:hover {
+  filter: var(--ico-hover-color);
 }
 
 /* Style for code syntax */

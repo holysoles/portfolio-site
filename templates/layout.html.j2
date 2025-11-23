@@ -3,7 +3,6 @@
     <head>
         <title>Patrick Evans</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/contact.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/projects.css') }}" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/decode.js') }}"></script>
@@ -13,7 +12,7 @@
     </head>
     <body>
         <div class="header">
-            <span>
+            <span class="title">
                 <a id="wsite-title" href="{{ url_for('home') }}">Patrick Evans</a>
             </span>
             <nav class="navbar">
@@ -23,13 +22,23 @@
                 <ul class="nav-list">
                     <li><a href="https://github.com/holysoles" target="_blank">Github</a></li>
                     <li><a href="{{ url_for('projects') }}"">Projects</a></li>
-                    <li><a href="https://www.linkedin.com/in/patrickvevans" target="_blank">LinkedIn</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
                 <div class="options">
                     <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")'><p></p></button>
                 </div>
             </nav>  
+            <div class="contact-container">
+                {% for item in contact_info %}
+                <span class="link-with-logo">
+                    {% if item['mask'] %}
+                        {% set masked = 'class="mask"' %}
+                    {% endif %}
+                    <a {{ masked }} rel="me" href="{{ item['href'] }}" target="_blank">
+                        <img src="{{ url_for('static', filename=item['icon']) }}" alt="{{ item['label'] }}"/>
+                    </a>
+                </span>
+                {% endfor %}
+            </div>
         </div>
         <div class="content">
             {% block content %}

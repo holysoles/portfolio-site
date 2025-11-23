@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     if (maskedElements.length > 0) {
         for (let elem of maskedElements) {
             var newHref = atob(elem.getAttribute("href"));
-            var newInnerText = atob(elem.textContent);
-            console.log(newInnerText)
             elem.setAttribute("href", newHref);
-            elem.textContent = newInnerText;
         }
     }
 });
