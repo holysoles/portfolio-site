@@ -28,7 +28,7 @@ COPY static/ ./static/
 COPY templates/ ./templates/
 COPY blog/ ./blog/
 COPY src/ ./src/
-COPY app.py uv.lock pyproject.toml ./
+COPY app.py encode.py uv.lock pyproject.toml ./
 # Installing separately from its dependencies allows optimal layer caching
 RUN --mount=type=cache,target=/root/.cache/uv \
 	uv sync --locked --no-dev
