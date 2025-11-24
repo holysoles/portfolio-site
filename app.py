@@ -49,7 +49,8 @@ config = {
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.config.from_mapping(config)
 
-minify(app=app, html=True, js=True, cssless=True, static=True)
+if getenv("TESTING") != "true":
+    minify(app=app, html=True, js=True, cssless=True, static=True)
 cache = Cache(app)
 
 # Proxy setup
@@ -88,7 +89,7 @@ def post(date: str | None = None, year: str | None = None, tag: str | None = Non
 
     # TODO split out preprocessing from loading base YAMLs for speedup
     return render_template(
-        "blog.html.j2",
+        "blog.html",
         post_array=post_array,
         date_dict=timeline,
         tags=TAGS,
@@ -100,7 +101,7 @@ def post(date: str | None = None, year: str | None = None, tag: str | None = Non
 @cache.cached()
 def projects():
     return render_template(
-        "projects.html.j2",
+        "projects.html",
         contact_info=ENCODED_CONTACT_INFO,
     )
 
@@ -123,7 +124,7 @@ def sitemap():
 
     _, timeline = posts.get_posts()
     xml = render_template(
-        "sitemap.xml.j2",
+        "sitemap.xml",
         host_url=request.host_url[:-1],
         static_pages=static_pages,
         blog_posts=timeline,

@@ -34,9 +34,10 @@ body:
       straightforward, and Docker's own documentation is pretty great for those steps (link). Managing these Pi-hole containers via Docker Compose and deploying 
       them to the cluster was more complex since not a lot of reference documentation existed. To the side is the Docker Compose YAML used for this. A couple 
       things to note about the Compose file:"
-  - text: "This is running in replicated mode with the intent to be deployed to two specific nodes. This is handled via the 
-      settings under \"deploy\". Specifically note the requirement of the target nodes requiring the label of \"pihole==true\". This can be set via command 
-      line from the Swarm leader: \"docker node update --label-add pihole=true <node id>\""
+  - text: 'This is running in replicated mode with the intent to be deployed to two specific nodes. This is handled via the 
+      settings under "deploy". Specifically note the requirement of the target nodes requiring the label of "pihole==true". This can be set via command line from the Swarm leader:'
+    code:
+      file_name: docker_compose_add_label.sh
   - text: "I'm directly publishing the container's ports to the corresponding ports on the host. This will use direct volumes for storage on the nodes, rather 
       than bind mounts."
   - text: "Most of the Pi-hole settings are configurable via the Compose file. However not all of them are, particularly custom defined Allow/Blocklists entries, 

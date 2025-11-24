@@ -17,14 +17,13 @@
             </span>
             <nav class="navbar">
                 <div class="menu-toggle" id="mobile-menu" onclick="document.querySelector('.sidebar').classList.toggle('expand-sidebar')">
-                    <span>></span>
                 </div>
                 <ul class="nav-list">
                     <li><a href="https://github.com/holysoles" target="_blank">Github</a></li>
-                    <li><a href="{{ url_for('projects') }}"">Projects</a></li>
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
                 </ul>
                 <div class="options">
-                    <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")'><p></p></button>
+                    <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")'></button>
                 </div>
             </nav>  
             <div class="contact-container">
