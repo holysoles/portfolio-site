@@ -12,16 +12,10 @@ DEFAULT_LAST_MOD = getenv("BUILD_DATE")
 USE_CACHE = getenv("USE_CACHE", "false")
 CONTACT_INFO = [
     {
-        "label": "Email",
-        "icon": "email.svg",
-        "href": "mailto:patrickvevans@gmail.com",
-        "mask": True,
-    },
-    {
-        "label": "Matrix",
-        "icon": "matrix.svg",
-        "href": "https://matrix.to/#/@holysoles:beeper.com",
-        "mask": True,
+        "label": "GitHub",
+        "icon": "github.svg",
+        "href": "https://github.com/holysoles",
+        "mask": False,
     },
     {
         "label": "Linkedin",
@@ -34,6 +28,18 @@ CONTACT_INFO = [
         "icon": "mastodon.svg",
         "href": "https://unifed.io/@pat",
         "mask": False,
+    },
+    {
+        "label": "Email",
+        "icon": "email.svg",
+        "href": "mailto:patrickvevans@gmail.com",
+        "mask": True,
+    },
+    {
+        "label": "Matrix",
+        "icon": "matrix.svg",
+        "href": "https://matrix.to/#/@holysoles:beeper.com",
+        "mask": True,
     },
 ]
 ENCODED_CONTACT_INFO = encode.contact_info(CONTACT_INFO)
@@ -71,18 +77,18 @@ def post(date: str | None = None, year: str | None = None, tag: str | None = Non
     if tag is None:
         tag = request.args.get("tag")
 
-    yaml_files, timeline = posts.get_posts()
+    yaml_files, timeline = posts.get_posts(subdir="posts")
 
     if date is not None:
         req_post = date + ".yaml"
         if req_post not in yaml_files:
             return "Post not found", 404
-        post_array = posts.load_post_data(yaml_files=[req_post])
+        post_array = posts.load_post_data(files=[req_post], subdir="posts")
     else:
         # process years before loading post data since we can just search filenames
         if year:
             yaml_files = [file for file in yaml_files if file.split("_")[0] == year]
-        post_array = posts.load_post_data(yaml_files=yaml_files)
+        post_array = posts.load_post_data(files=yaml_files, subdir="posts")
         # process tag filtering now that we have post data
         if tag:
             post_array = [post for post in post_array if tag in post.get("tags", [])]
@@ -93,6 +99,17 @@ def post(date: str | None = None, year: str | None = None, tag: str | None = Non
         post_array=post_array,
         date_dict=timeline,
         tags=TAGS,
+        contact_info=ENCODED_CONTACT_INFO,
+    )
+
+
+@app.route("/about", methods=["GET"])
+@cache.cached()
+def about():
+    about_content = posts.load_post_data(files=["about.yaml"])[0]
+    return render_template(
+        "about.html",
+        content=about_content,
         contact_info=ENCODED_CONTACT_INFO,
     )
 
@@ -122,7 +139,7 @@ def sitemap():
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 static_pages.append(url)
 
-    _, timeline = posts.get_posts()
+    _, timeline = posts.get_posts(subdir="posts")
     xml = render_template(
         "sitemap.xml",
         host_url=request.host_url[:-1],
