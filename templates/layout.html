@@ -3,7 +3,6 @@
     <head>
         <title>Patrick Evans</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/projects.css') }}" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/decode.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/copyCodeSnippet.js') }}"></script>
@@ -19,8 +18,8 @@
                 <div class="menu-toggle" id="mobile-menu" onclick="document.querySelector('.sidebar').classList.toggle('expand-sidebar')">
                 </div>
                 <ul class="nav-list">
-                    <li><a href="https://github.com/holysoles" target="_blank">Github</a></li>
                     <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
                 </ul>
                 <div class="options">
                     <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")'></button>
@@ -29,10 +28,7 @@
             <div class="contact-container">
                 {% for item in contact_info %}
                 <span class="link-with-logo">
-                    {% if item['mask'] %}
-                        {% set masked = 'class="mask"' %}
-                    {% endif %}
-                    <a {{ masked }} rel="me" href="{{ item['href'] }}" target="_blank">
+                    <a class="{{ 'mask' if item['mask'] else 'unmasked' }}" rel="me" href="{{ item['href'] }}" target="_blank">
                         <img src="{{ url_for('static', filename=item['icon']) }}" alt="{{ item['label'] }}"/>
                     </a>
                 </span>

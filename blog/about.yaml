@@ -1,0 +1,45 @@
+title: ""
+tags: []
+body:
+  - section_title: "About Me"
+    title_tag: h2
+    text: Welcome! I'm Patrick Evans, a DevOps and Site Reliability Engineer working in Healthcare IT. I'm passion about building reliable, maintainable systems and open source software. 
+  - text: My journey begain with writing [sneaker bots](https://queue-it.com/blog/how-do-sneaker-bots-work) in JavaScript, while studying Electrical Engineering in college. I started my career in systems administration, but quickly gravitated to site reliability engineering. From there I moved into management, building foundational processes as my organization transitioned into an IaC and development-first mindset.
+  - text: Here, you’ll find my insights on both technical and managerial aspects of DevOps, SRE, and software development. Expect posts ranging from personal project highlights and effective code review to team-building strategies and industry trends. Thanks for stopping by! I’m excited to share my journey and experiences with you.
+  - section_title: "Technical Skills"
+    title_tag: h2
+  - section_title: "Development"
+    list:
+      - Golang
+      - Python
+      - Bash
+      - PowerShell
+      - Java
+      - Groovy
+      - JavaScript
+  - section_title: "DevOps"
+    list:
+      - Kubernetes
+      - Gitlab Pipelines
+      - GitHub Actions
+      - Jenkins
+      - AWS
+      - Azure
+      - Artifactory
+      - Git 
+      - Docker/Docker Swarm
+      - Puppet
+      - Chocolatey
+  - section_title: "Systems Administration"
+    list:
+      - Citrix Virtual Apps
+      - VMware Horizon
+      - Splunk ITSI
+      - IIS
+      - Nginx
+      - Network Analysis
+      - DNS
+      - VLANs
+      - ServiceNow
+      - Proxmox
+      - VMware vCenter

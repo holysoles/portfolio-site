@@ -93,6 +93,12 @@ body {
 h1 {
   font-size: 2em;
 }
+h2 {
+  padding: 5px;
+}
+h3 {
+  padding: 5px;
+}
 
 article {
   background-color: var(--article-bgnd-color);
@@ -112,6 +118,9 @@ article h4 {
 
 article p {
   color: var(--article-text);
+}
+
+.main-wrapper p {
   padding: 6px;
 }
 
@@ -213,6 +222,7 @@ button.dark-mode::before {
 
 .article-list {
   padding-left: 25px;
+  padding-right: 25px;
 }
 
 .contact-container {
@@ -293,6 +303,47 @@ code {
   padding-top: 6rem; /* accommodate the fixed header */
 }
 
+.content-container {
+    margin: 20px;
+    text-align: center;
+}
+
+.info-page {
+  margin-left: 25%;
+  margin-right: 25%;
+  text-justify: left;
+}
+
+.info-page ul {
+  display: inline-block;
+  line-height: 1.75;
+  padding-bottom: 10px;
+}
+
+/* projects page styling */
+ul.project-links {
+  list-style-type: none;
+  display: inline-block;
+  line-height: 1.75;
+  padding-bottom: 10px;
+}
+
+.info-page li.project {
+  text-align: left;
+  width: unset;
+  float: unset;
+}
+
+li.project a {
+  text-decoration: none;
+}
+
+/* about page styling */
+.info-page li {
+  display: block;
+  width: 25%;
+  float: left;
+}
 
 /* Style for sidebar */
 .sidebar {
@@ -333,8 +384,6 @@ code {
 }
 
 
-
-
 /* MOBILE */
 
  /* For tablets and smaller devices */
@@ -354,6 +403,12 @@ code {
 
   .content {
     padding-top: 0rem; /* accommodate the fixed header */
+  }
+
+  .info-page {
+    margin-left: 10%;
+    margin-right: 10%;
+    text-justify: left;
   }
 
   .nav-list {
