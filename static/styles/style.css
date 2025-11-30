@@ -267,17 +267,20 @@ button.dark-mode::before {
   border-radius: 5px;
   overflow-x: auto; /* Enable horizontal scrolling for long lines of code */
   line-height: var(--code-line-height);
-  font-size: 14px;
+  font-size: var(--code-line-height);
 }
-code {
+pre {
   font-family: 'Courier New', monospace;
   background-color: var(--bgnd-color);
   color: var(--main-text);
   flex-grow: 1; /* Allow code block to grow and take remaining space */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .code-text {
   margin: 0px;
-  height: var(--code-line-height);
+  display: block;
+  width: auto;
 }
 .line-numbers {
   display: flex;
@@ -292,7 +295,7 @@ code {
 }
 .line-highlight:hover{
   background-color: var(--code-hover-color);
-  display: block;
+  /*display: block;*/
   margin-right: -10px;
   margin-left: -10px;
   padding: 0 10px;
