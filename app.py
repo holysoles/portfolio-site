@@ -1,4 +1,6 @@
 from os import getenv
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from flask import Flask, Response, render_template, request, url_for
 from flask_caching import Cache
@@ -10,6 +12,7 @@ import src.posts as posts
 
 DEFAULT_LAST_MOD = getenv("BUILD_DATE")
 USE_CACHE = getenv("USE_CACHE", "false")
+TIMEZONE = getenv("TZ", "UTC")
 CONTACT_INFO = [
     {
         "label": "GitHub",
@@ -129,6 +132,19 @@ def has_no_empty_params(rule):
     return len(defaults) >= len(arguments)
 
 
+@app.route("/feed.xml", methods=["GET"])
+@app.route("/feed", methods=["GET"])
+@app.route("/rss", methods=["GET"])
+@cache.cached()
+def feed():
+    yaml_files, timeline = posts.get_posts(subdir="posts")
+    posts_arr = posts.load_post_data(files=yaml_files, subdir="posts")
+    xml = render_template("feed.xml", posts=posts_arr)
+    r = Response(response=xml, status=200, mimetype="application/xml")
+    r.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return r
+
+
 @app.route("/sitemap.xml", methods=["GET"])
 @cache.cached()
 def sitemap():
@@ -150,3 +166,9 @@ def sitemap():
     r = Response(response=xml, status=200, mimetype="application/xml")
     r.headers["Content-Type"] = "text/xml; charset=utf-8"
     return r
+
+@app.template_filter('strftime')
+def _jinja2_filter_datetime(date, fmt):
+    date = datetime.strptime(date, '%Y_%m_%d')
+    date = date.replace(tzinfo=ZoneInfo(TIMEZONE))
+    return date.strftime(fmt)

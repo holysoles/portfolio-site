@@ -1,5 +1,4 @@
 {% extends 'layout.html' %}
-{% from 'macros.j2' import unique_id %}
 {% block content %}
 <div class="main-wrapper">
     <div class="sidebar-container">
@@ -47,7 +46,8 @@
                     {{ post['date'] }}
                 </h4>
             {% endif %}
-            {% include 'text_processor.html' %}
+            {% from 'text_processor.html' import post_to_html %}
+            {{ post_to_html(post) }}
         {% endfor %}
     </div>
 </div>

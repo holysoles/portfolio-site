@@ -1,5 +1,7 @@
+{% from 'macros.j2' import unique_id %}
+{%- macro post_to_html(post) -%}
 {% for paragraph in post['body'] %}
-        <div>
+    <div>
         {% if paragraph['section_title'] %}
             {% set title_tag='h3' %}
             {% if paragraph['title_tag'] %}
@@ -63,3 +65,4 @@
        {% endif %}
     </div>
 {% endfor %}
+{% endmacro %}
