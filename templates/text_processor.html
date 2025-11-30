@@ -54,17 +54,15 @@
                     {% endfor %}
                     </div>
                 {% endif %}
-                    <code>
-                    {% if rss %}
-                        <pre class="code-text">{{ paragraph.code.content }}</pre>
-                    {% else %}
-                        {% for line in paragraph['code']['content'].splitlines() %}
-                            <span class="line-highlight">
-                                <pre class="code-text">{{line}}</pre>
-                            </span>
-                        {% endfor %}
-                    {% endif %}
-                    </code>
+                    <pre>
+                    {%- if rss -%}
+                        <code class="code-text">{{ paragraph.code.content }}</code>
+                    {%- else -%}
+                        {%- for line in paragraph['code']['content'].splitlines() -%}
+                        <code class="code-text line-highlight">{{line}}<br/></code>
+                        {%- endfor -%}
+                    {%- endif -%}
+                    </pre>
                 </div>
             </div>
        {% endif %}
