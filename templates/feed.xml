@@ -18,7 +18,7 @@
       <description>{{ post['title'] }}</description>
       <content:encoded>
         {% from 'text_processor.html' import post_to_html %}
-        {{ post_to_html(post) | forceescape }}
+        {{ post_to_html(post, rss=true) | forceescape }}
       </content:encoded>
     </item>
     {% endfor %}

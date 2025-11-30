@@ -1,5 +1,5 @@
 {% from 'macros.j2' import unique_id %}
-{%- macro post_to_html(post) -%}
+{%- macro post_to_html(post, rss=false) -%}
 {% for paragraph in post['body'] %}
     <div>
         {% if paragraph['section_title'] %}
@@ -8,18 +8,18 @@
                 {% set title_tag=paragraph['title_tag'] %}
             {% endif %}
             <{{ title_tag }}>
-               {{ paragraph['section_title'] }}
+               {{ paragraph.section_title }}
             </{{ title_tag }}>
        {% endif %}
        {% if paragraph['text'] %}
            <p>
                {# mark this safe so we can render hyperlinks from markdown #}
-               {{ paragraph['text'] | safe }}
+               {{ paragraph.text | safe }}
            </p>
        {% endif %}
        {% if paragraph['list'] %}
            <ul class="article-list">
-           {% for list_item in paragraph['list'] %}
+           {% for list_item in paragraph.list %}
                <li>{{ list_item }}</li>
            {% endfor %}
            </ul>
@@ -32,33 +32,41 @@
            </ol>
        {% endif %}
        {% if paragraph['code'] %}
-           {% set code_id = unique_id() %}
-           <div class="code-container" id="{{ code_id }}">
-               <div class="code-header">
-                   <div class="code-language">
-                       {{ paragraph['code']['type'] }}
-                   </div>
-                   <div class="code-actions">
-                       <button class="copy-button" onclick="copyCodeSnippet('{{ code_id }}')">
-                           Copy
-                       </button>
-                   </div>
-               </div>
-               <div class="code-body">
-                   <div class="line-numbers line-numbers-background">
-                   {% for line in paragraph['code']['content'].splitlines() %}
-                       <span>{{ loop.index }}</span>
-                   {% endfor %}
-                   </div>
-                   <code>
-                   {% for line in paragraph['code']['content'].splitlines() %}
-                       <span class="line-highlight">
-                           <pre class="code-text">{{line}}</pre>
-                       </span>
-                   {% endfor %}
-                   </code>
-               </div>
-           </div>
+            {% set code_id = unique_id() %}
+            <div class="code-container" id="{{ code_id }}">
+            {% if not rss %}
+                <div class="code-header">
+                    <div class="code-language">
+                        {{ paragraph.code.type }}
+                    </div>
+                    <div class="code-actions">
+                        <button class="copy-button" onclick="copyCodeSnippet('{{ code_id }}')">
+                               Copy
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+                <div class="code-body">
+                {% if not rss %}
+                    <div class="line-numbers line-numbers-background">
+                    {% for line in paragraph['code']['content'].splitlines() %}
+                        <span>{{ loop.index }}</span>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                    <code>
+                    {% if rss %}
+                        <pre class="code-text">{{ paragraph.code.content }}</pre>
+                    {% else %}
+                        {% for line in paragraph['code']['content'].splitlines() %}
+                            <span class="line-highlight">
+                                <pre class="code-text">{{line}}</pre>
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                    </code>
+                </div>
+            </div>
        {% endif %}
        {% if paragraph['image'] %}
            <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />

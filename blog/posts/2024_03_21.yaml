@@ -37,5 +37,4 @@ body:
       pipeline, has improved my development and deployment workflows. Containerization has not only enhanced portability, scalability,
       and availability, but also simplified the management of dependencies. With a reliable CI/CD pipeline in place, I'm better equipped 
       to iterate on my projects in the future."
-  - text: "For future improvements, after developing unit tests for these projects and have a seperate workflow run those on commit 
-      automatically."
+  - text: "For future improvements, I'd like to work on developing unit tests for these projects as well as create GitHub Actions to trigger them automatically upon new commits/PRs."
