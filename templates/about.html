@@ -3,8 +3,8 @@
 <div class="main-wrapper">
     <div class="content-container info-page">
         <h2>{{ content.title }}</h2>
-        {% set post=content %}
-        {% include 'text_processor.html' %}
+        {% from 'text_processor.html' import post_to_html %}
+        {{ post_to_html(content) }}
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% set domain='pve.dev' -%}
+{% set base_url='https://'+domain -%}
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+  <title>{{ domain }}</title>
+    <link>{{ base_url }}/</link>
+    <description>Recent blog posts from {{ domain }}</description>
+    <atom:link href="{{ base_url }}/feed.xml" rel="self" type="application/rss+xml"></atom:link>
+    {% for post in posts %}
+    <item>
+      <title>{{ post['title'] }}</title>
+      {% set date_arr = post['date'].split('/') %}
+      {% set date_str = date_arr[2] +"_"+ date_arr[0] +"_"+ date_arr[1] %}
+      <link>{{ base_url }}{{ url_for('post', date=date_str) }}</link>
+      <guid>{{ base_url }}{{ url_for('post', date=date_str) }}</guid>
+      <pubDate>{{ date_str | strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+      <description>{{ post['title'] }}</description>
+      <content:encoded>
+        {% from 'text_processor.html' import post_to_html %}
+        {{ post_to_html(post) | forceescape }}
+      </content:encoded>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>
