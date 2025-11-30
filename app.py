@@ -1,5 +1,5 @@
-from os import getenv
 from datetime import datetime
+from os import getenv
 from zoneinfo import ZoneInfo
 
 from flask import Flask, Response, render_template, request, url_for
@@ -57,6 +57,10 @@ config = {
 }
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.config.from_mapping(config)
+
+# jinja config
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 
 if getenv("TESTING") != "true":
     minify(app=app, html=True, js=True, cssless=True, static=True)
@@ -167,8 +171,9 @@ def sitemap():
     r.headers["Content-Type"] = "text/xml; charset=utf-8"
     return r
 
-@app.template_filter('strftime')
+
+@app.template_filter("strftime")
 def _jinja2_filter_datetime(date, fmt):
-    date = datetime.strptime(date, '%Y_%m_%d')
+    date = datetime.strptime(date, "%Y_%m_%d")
     date = date.replace(tzinfo=ZoneInfo(TIMEZONE))
     return date.strftime(fmt)
