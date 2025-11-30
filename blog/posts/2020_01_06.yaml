@@ -20,8 +20,12 @@ body:
     - PCB Proto-board/Breadboard"
   - section_title: "Hardware"
     text: "First I organized then soldered everything on the board. The NPN transistor is used so that the IR LED can be powered with 5V, which gives a stronger signal, rather than from the Arduino. The BT module will be used for external commands from my Raspberry Pi over the serial port. I tried to space the DHT sensor as far as possible from the Arduino and the BJT to prevent heat interference. With all that done, let's move onto the software!"
-  - image: "arduino_temp_control_1.jpg"
-  - image: "arduino_temp_control_2.jpg"
+  - image:
+      file: "arduino_temp_control_1.jpg"
+      alt: 'A picture of the assembled hardware on a table. A breadboard acts as a mounting plate for the other components: a temperature sensor, infrared LED, Arduino microcontroller, and bluetooth module board. A power cord is connected and runs out of view.'
+  - image:
+      file: arduino_temp_control_2.jpg
+      alt: An alternative view of the assembled project's hardware. The bluetooth module is more clearly shown.
   - section_title: "Software"
     text: "I knew I needed a few libraries before I began to code so I added them through the Arduino IDE library manager:"
   - list:

@@ -58,7 +58,7 @@
                     {%- if rss -%}
                         <code class="code-text">{{ paragraph.code.content }}</code>
                     {%- else -%}
-                        {%- for line in paragraph['code']['content'].splitlines() -%}
+                        {%- for line in paragraph.code.content.splitlines() -%}
                         <code class="code-text line-highlight">{{line}}<br/></code>
                         {%- endfor -%}
                     {%- endif -%}
@@ -67,7 +67,7 @@
             </div>
        {% endif %}
        {% if paragraph['image'] %}
-           <img class="blog-image" src="{{ url_for('static', filename=paragraph['image']) }}" />
+        <img class="blog-image" src="{{ url_for('static', filename=paragraph.image.file) }}" alt="{{ paragraph.image.alt }}" />
        {% endif %}
     </div>
 {% endfor %}

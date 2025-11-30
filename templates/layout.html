@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Patrick Evans</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/decode.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='scripts/copyCodeSnippet.js') }}"></script>
+        <script type="text/javascript" defer src="{{ url_for('static', filename='scripts/copyCodeSnippet.js') }}"></script>
         <meta name="color-scheme" content="dark light">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div class="header">
+        <div class="header" role="banner">
             <span class="title">
                 <a id="wsite-title" href="{{ url_for('home') }}">Patrick Evans</a>
             </span>
@@ -22,7 +22,7 @@
                     <li><a href="{{ url_for('about') }}">About</a></li>
                 </ul>
                 <div class="options">
-                    <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")'></button>
+                    <button class="dark-mode" onclick='document.body.classList.toggle("alt-color-mode")' aria-label="toggle-dark-mode"></button>
                 </div>
             </nav>  
             <div class="contact-container">
@@ -35,7 +35,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="content">
+        <div class="content" role="main">
             {% block content %}
             {% endblock %}
         </div>

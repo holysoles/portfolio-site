@@ -13,7 +13,9 @@ body:
       the issue with the upstream Windows servers was resolved and required a service restart. The solution I designed is pictured below. DNS queries are now sent 
       to a single IP address (192.168.1.2), provided via DHCP, which is a load balanced IP address on my ADC (now NetScaler again) VPX appliance, pointed at two 
       Pi-hole instances."
-    image: "DNS_diagram.png"
+    image:
+      file: DNS_diagram.png
+      alt: A diagram showing the DNS architecture. A Citrix NetScaler is the entrypoint, which forwards queries to one of two Pi-Hole containers, running under Docker Swarm. Those Pi-Hole containers forward queries upstream to Windows DNS servers, which in turn forward queries to Cloudflare at 1.1.1.1.
   - section_title: "NetScaler Configuration"
     text: "Getting a NetScaler instance up and running is actually pretty easy, since as of v12.1, Citrix offers a [Freemium licensing option](https://docs.netscaler.com/en-us/citrix-adc/current-release/licensing.html), which is bandwidth 
       restricted to 20 Mbps and doesn't provide access to certain features like GSLB or Citrix Gateway, but neither limitation is an issue for this use case. 
@@ -26,7 +28,9 @@ body:
       other simple health checks. I configured a DNS monitor with the parameters shown on the right, specifically to query for my local domain name, and ensure it 
       resolves to one of the IP addresses of my domain controllers. Multiple IP addresses can be added to the list to be considered a valid response. Don't forget 
       to save your changes since they won't persist through reboot otherwise!"
-    image: "netscaler_healthcheck.png"
+    image:
+      file: netscaler_healthcheck.png
+      alt: 'the parameters provided to the NetScaler health check configuration. The settings are: an interval of 5 seconds, a timeout of 2 seconds, a query for domain.local a query type of address, and an expected IP address of 192.168.1.2'
   - section_title: "Pi-hole Container Setup"
     text: "The upstream Pi-hole instances are configured with Docker Compose, deployed as containers on a Docker Swarm cluster, and managed via Portainer.
       I opted for [Docker Swarm](https://docs.docker.com/engine/swarm/) over a more complex tool like Kubernetes given the relatively low complexity of this project's requirements. 
