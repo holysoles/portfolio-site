@@ -27,6 +27,12 @@ CONTACT_INFO = [
         "mask": False,
     },
     {
+        "label": "RSS",
+        "icon": "rss.svg",
+        "href": "https://pve.dev/feed",
+        "mask": False,
+    },
+    {
         "label": "Mastodon",
         "icon": "mastodon.svg",
         "href": "https://unifed.io/@pat",
