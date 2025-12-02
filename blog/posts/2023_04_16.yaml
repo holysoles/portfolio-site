@@ -23,11 +23,15 @@ body:
       to a site with a cert error.
   - text: I was able to navigate from this Legal site to [Lumen](https://lumendatabase.org/), where one of their blog posts 
       [from 1/26/2023](https://lumendatabase.org/blog_entries/dmca-abuse-part-3-an-oligarchs-success) used a HTTP link.
-  - image: lumen-database-http-link.png
+  - image:
+      file: lumen-database-http-link.png
+      alt: a browser screenshot of a lumen database blog post. A hyperlink is being inspected in the browser developer tools. The hyperlink is shown to be a HTTP link.
 
   - text: I setup an A record in my home DNS for this website, and pointed it a self-hosted webserver that hosted a single page, with a plain text link to 
       [FDroid](https://f-droid.org/), a website with Open Source apps available for download as APKs.
-  - image: fdroid-link-webserver.png
+  - image:
+      file: fdroid-link-webserver.png
+      alt: a browser screenshot of a very basic web server. The only content is a plain-text link to http://fdroid.org
     
   - text: While it might seem untuitive to have this be plain-text, we need to exploit another feature.
   - text: Pressing and holding to highlight the full URL presents an “Open” option in the context menu. Once clicked, nothing will appear to happen, 
