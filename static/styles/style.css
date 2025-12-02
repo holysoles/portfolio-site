@@ -14,17 +14,17 @@ body {
   /* light mode */
   --bgnd-color: #f5f5f5;
   --article-bgnd-color: #ffffff;
-  --divider-color: #5555553b;
+  --divider-color: #444;
   --mobile-sidebar-bgnd-color: #333;
   --main-text: #333;
-  --article-text: #555;
+  --article-text: #444;
   --code-hover-color: #ffe8b0;
   --dark-mode-icon: "☾";
   --link-color: #7516ff;
   /* margins/padding */
   --sidebar-width: 130px;
   --box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  --code-line-height: 1.5em;
+  --code-line-height: 1.3em;
 
 }
 
@@ -32,10 +32,10 @@ body {
 body.alt-color-mode { 
   --bgnd-color: #0000006d;
   --article-bgnd-color: #333;
-  --divider-color: #f5f5f5c9;
+  --divider-color: #e6e6e6;
   --mobile-sidebar-bgnd-color: #5f5c59;
   --main-text: #f5f5f5;
-  --article-text: #f5f5f5c9;
+  --article-text: #e6e6e6;
   --code-hover-color: #ffe9b08a;
   --dark-mode-icon: "☀︎";
   --link-color: #938dfe;
@@ -47,10 +47,10 @@ body.alt-color-mode {
   body { 
     --bgnd-color: #0000006d;
     --article-bgnd-color: #333;
-    --divider-color: #f5f5f5c9;
+    --divider-color: #e6e6e6;
     --mobile-sidebar-bgnd-color: #5f5c59;
     --main-text: #f5f5f5;
-    --article-text: #f5f5f5c9;
+    --article-text: #e6e6e6;
     --code-hover-color: #ffe9b08a;
     --dark-mode-icon: "☀︎";
     --link-color: #938dfe;
@@ -61,9 +61,9 @@ body.alt-color-mode {
     --bgnd-color: #f5f5f5;
     --article-bgnd-color: #ffffff;
     --mobile-sidebar-bgnd-color: #e0e0e0;
-    --divider-color: #5555553b;
+    --divider-color: #444;
     --main-text: #333;
-    --article-text: #555;
+    --article-text: #444;
     --code-hover-color: #ffe8b0;
     --dark-mode-icon: "☾";
     --link-color: #7516ff;
@@ -116,7 +116,7 @@ article h4 {
   padding-left: 20px;
 }
 
-article p {
+article .article-text {
   color: var(--article-text);
 }
 
@@ -267,7 +267,6 @@ button.dark-mode::before {
   border-radius: 5px;
   overflow-x: auto; /* Enable horizontal scrolling for long lines of code */
   line-height: var(--code-line-height);
-  font-size: var(--code-line-height);
 }
 pre {
   font-family: 'Courier New', monospace;

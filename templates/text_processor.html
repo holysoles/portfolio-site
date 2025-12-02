@@ -12,13 +12,13 @@
             </{{ title_tag }}>
        {% endif %}
        {% if paragraph['text'] %}
-           <p>
+           <p class="article-text">
                {# mark this safe so we can render hyperlinks from markdown #}
                {{ paragraph.text | safe }}
            </p>
        {% endif %}
        {% if paragraph['list'] %}
-           <ul class="article-list">
+           <ul class="article-list article-text">
            {% for list_item in paragraph.list %}
                <li>{{ list_item }}</li>
            {% endfor %}
