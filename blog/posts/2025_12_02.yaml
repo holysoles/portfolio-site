@@ -1,0 +1,61 @@
+title: "Stop Blaming Scale: Why Ownership Matters"
+tags:
+  - highlights
+  - culture
+body:
+  - text: Do you dread opening tickets when an internal tool is broken? Do you struggle to find someone to call when a production critical service is broken? Have you ever asked someone why something is broken and gotten a shrug in response?
+  - text: If you answered yes to these questions, whether you've noticed it or not, you likely have an ownership problem in your organization.
+
+  - section_title: What Does it Mean to Own?
+    text: Here, I define 'ownership' as the explicit accountability and responsibility for the long-term success and health of a specific area, whether it's a service, project, or process. Ownership in an equity sense certainly has its benefits, but I'm not here to talk about that (at least today).
+  - text: "It seems that all too often, companies allow a culture to permeate that doesn't reward demonstration of responsibility and mastery. This can be triggered by many things, such as:"
+    list:
+      - fear of blame
+      - unclear role definitions
+      - rewarding output over impact
+
+  - section_title: Isn't This Just Describing Working at a Large Company?
+    text: While some of these may seem like natural problems that come with scaling a company, I disagree. I've worked at a large (>11k headcount) company where ownership was prioritized, and the impact it had on the work environment was notable.
+  - text: One management exercise, performed on a semi-annual basis, involved a group of the division's managers meeting to discuss what areas of ownership their direct reports had, if they were satisfied with their responsibilities, and what their growth path was within those areas. This acted as an accountability measure, ensuring that every manager was thinking about this for their team members. If someone didn't already own something, we could discuss as a group opportunities that fit their skill set and growth path. It also encouraged regular check-ins with team members to understand their skill growth goals and how you as a manager could facilitate them.
+
+  - section_title: Why Should I Solve This?
+    text: For those that *do* have high ownership, having to work with others who don't is frustrating. Unchecked over time, this can become a negative feedback loop, starting with apathy, and ending with "[quiet quitting](https://www.investopedia.com/what-is-quiet-quitting-6743910)", or even departure.
+  - text: Direct ownership also encourages mastery. Having a discrete list of responsibilities, whether assigned or chosen, offers a clear path of knowledge and skill growth that aligns with organizational needs. This has the added benefit of professional development, bolstering an individual's resume with specific skills that can help them land their next job.
+  - text: Pride is a powerful motivating factor. Being responsible for the perception of your area's success and failures, combined with a culture of excellence, can drive positive, long-term outcomes. This allows someone to continue building up an area that has been an organization's pain point in the past. This can also help with building visibility and working towards promotions or other opportunities.
+  - text: Another reason to solve this is to avoid a double standard. Any user should have confidence in issue resolution and service reliability. If your organization provides customer-facing support, your internal support should carry the same attitude and be held to the same standard. Otherwise you risk employees noticing the double standard, and considering internal support to be a cushy gig, solely because they don't have the same expectations.
+  - text: "To summarize:"
+  - text: |
+      |     | High Ownership | Low Ownership |
+      | --- | --- | --- |
+      | **Accountability** | Well-defined roles | Ambiguous, unclear roles |
+      | **Personal Growth** | Opportunity for mastery | Stagnation |
+      | **Team Culture** | Excellence and support | Frustration and apathy |
+      | **Outcomes** | Improved results and morale | Increased failures and turnover |
+
+  - section_title: Okay, I'm Convinced. How Do I Address the Problem?
+    text: If you are in management, making sure this culture grows is **your responsibility**, which includes actively sharing feedback. However, many of these can be encouraged or done even without a management dynamic.
+  - text: "The most straightforward step to addressing this is to ensure that everyone has at least 1-2 areas that they will own. This means thinking of processes, projects, services, and tools that might not have a owner. Everything from:"
+    list: 
+    - Who is responsible for making sure GitLab runners are consistently available for jobs?  
+    - Who owns the integration test suite?
+    - Who's the expert on using sysinternals tools?
+  - text: 'For these "named owners" to become "true owners", they will need:'
+    list:
+      - to collect feedback from their "users"  
+      - the autonomy to make decisions for their area  
+      - the expectation of responsibility of the success and failures of their area  
+      - understanding that it may take time to develop expertise of their area
+  - text: These are critical to transforming a simple responsibility into ownership. They allow an individual to feel empowered in in their daily work.
+  - text: The more institutional way to tackle this is with recognition and mentoring. Highlighting individuals who demonstrate what ownership means to your division or team is important for building a culture where people are rewarded (including financially) for going above and beyond. This can take the simple form of giving shoutouts to coworkers in a meeting, or giving out awards to those who best embody ownership in your organization.
+  - text: Finally, in a discrete sense, having an **easily accessible, easily searchable, healthy** index of assets and services ([ITIL CMDB](https://en.wikipedia.org/wiki/Configuration_management_database)) can help here. All employees should have read access to this, and be trained to use it (or have a guide they can bookmark). Not to mention there are potential compliance obligations that a proper CMDB can help solve.
+
+  - section_title: But Burnout?
+    text: "There is a distinction here that should be made: I am not advocating for over-working employees, or throwing individuals in the deep end in a new area. Ownership means being the primary point of contact, driving an issue/project to resolution, but still leveraging resources and co-workers where appropriate. I'm also not suggesting an owner be responsible and on-call 24/7. If your organization has SLAs that need to be met, an on-call rotation that includes cross-training is far more sustainable approach for maintaining a system."
+  - text: For managers, making sure you are checking in with your team members. Seeing if they have grown bored with their existing responsibilities or are feeling overworked. It's very possible they need more support or would benefit from a rotation to different ownership areas where they can continue to grow.
+  
+  - section_title: The Bus Factor
+    text: It's also important to call out that area and process knowledge needs to be distributed, not siloed to single person, [lest there be an unforeseen circumstance](https://sketchplanations.com/bus-factor). More than one person in your organization should always have an understanding of the work being done in any given area to minimize risk; you don't want to be stuck learning about a service while troubleshooting a critical production issue. That said, it's not bad to have a single person *responsible* for the long-term success of that service.
+
+  - section_title: Conclusion
+    text: "I hope this has served as a chance to consider how ownership looks in your own team or organization. If change is needed, start a conversation about fixing it with someone else who *cares*: your manager, PM, etc. If you're in management, champion a culture where taking responsibility is celebrated, not just expected."
+  - text: If your org doesn't address this, your exceptional and transformative co-workers can and will find a place that already has.
