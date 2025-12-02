@@ -126,16 +126,19 @@ def parse_table(paragraph: str) -> str:
         for match in all_table:
             cell = match.group()
             if cell == "\n":
-                row += "</tr>"
-                table_rows += row
-                row = "<tr>"
+                # make sure not empty row
+                if row != "<tr>":
+                    row += "</tr>"
+                    table_rows += row
+                    row = "<tr>"
             elif header_sep_re.match(cell) is not None:
                 cell_type = "td"
             else:
                 row += f"<{cell_type}>{cell}</{cell_type}>"
-        new_text = f"""<table>
+        # hack: table can't under p
+        new_text = f"""</p><table>
         {table_rows}
-        </table>"""
+        </table><p class="article-text">"""
         paragraph = paragraph.replace(table_og_text, new_text)
     return paragraph
 
