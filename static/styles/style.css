@@ -323,6 +323,26 @@ pre {
   padding-bottom: 10px;
 }
 
+/* table styling */
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border-bottom: 1px solid var(--article-text);
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+
 /* projects page styling */
 ul.project-links {
   list-style-type: none;

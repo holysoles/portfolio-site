@@ -60,6 +60,7 @@ def load_post_data(files: list[str], subdir: str = ""):
                         ].replace(".", "")
                         body["code"]["content"] = code_snippet
                 if body.get("text"):
+                    body["text"] = parse_table(body["text"])
                     body["text"] = parse_hyperlinks(body["text"])
                     body["text"] = parse_bold(body["text"])
                     body["text"] = parse_code_inline(body["text"])
@@ -111,6 +112,34 @@ def parse_code_inline(paragraph: str) -> str:
     return paragraph
 
 
+def parse_table(paragraph: str) -> str:
+    table_re = re.compile(r"(\|.*\|(\n|$))+")
+    table_match = table_re.search(paragraph)
+    if table_match is not None:
+        table_og_text = table_match.group()
+        table_re_text = re.compile(r"[^\|]+")
+        all_table = table_re_text.finditer(table_og_text)
+        header_sep_re = re.compile(r"\s+-+\s+")
+        table_rows = ""
+        row = "<tr>"
+        cell_type = "th"
+        for match in all_table:
+            cell = match.group()
+            if cell == "\n":
+                row += "</tr>"
+                table_rows += row
+                row = "<tr>"
+            elif header_sep_re.match(cell) is not None:
+                cell_type = "td"
+            else:
+                row += f"<{cell_type}>{cell}</{cell_type}>"
+        new_text = f"""<table>
+        {table_rows}
+        </table>"""
+        paragraph = paragraph.replace(table_og_text, new_text)
+    return paragraph
+
+
 def get_tags() -> list[str]:
     yaml_files, _ = get_posts(subdir="posts")
     post_array = load_post_data(files=yaml_files, subdir="posts")
@@ -120,4 +149,3 @@ def get_tags() -> list[str]:
             for tag in post["tags"]:
                 tags[tag] = None
     return tags.keys()
-
