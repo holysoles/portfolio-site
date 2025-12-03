@@ -430,7 +430,7 @@ li.project a {
   }
 
   .content {
-    padding-top: 0rem; /* accommodate the fixed header */
+    padding-top: 6rem; /* accommodate the fixed header */
   }
 
   .info-page {
