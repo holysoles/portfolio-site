@@ -3,7 +3,7 @@ name = "portfolio-site"
 version = "0.10.4"
 description = "Personal blog and portfolio website running on Flask and Jinja templates"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
     "flask==3.1.1",
     "flask-minify==0.50",
